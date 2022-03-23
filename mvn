@@ -1,0 +1,14 @@
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  0.221 s
+[INFO] Finished at: 2022-03-22T13:40:32+01:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Could not find goal 'redeploymvn' in plugin org.codehaus.cargo:cargo-maven2-plugin:1.7.11 among available goals run, start, daemon-start, uberwar, deployer-start, package, stop, undeploy, configure, deployer-deploy, daemon-stop, install, deployer-undeploy, deploy, deployer-redeploy, help, redeploy, deployer-stop, restart -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoNotFoundException

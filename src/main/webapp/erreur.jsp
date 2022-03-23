@@ -1,7 +1,9 @@
 <html>
 <body>
 <div class="container-fluid">
-  
+
+<% @include file="navbar.jsp" %>
+
 CECI EST UNE 
 <h1> ENORME </h1>
 

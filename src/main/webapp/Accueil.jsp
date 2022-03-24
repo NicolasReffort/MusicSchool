@@ -15,6 +15,9 @@
     J'ai dit : 
     Bonjour ! 
   </div>
+  <br>
+
+  <jsp:include page="footer.jsp" />
 
 </body>
 </html>

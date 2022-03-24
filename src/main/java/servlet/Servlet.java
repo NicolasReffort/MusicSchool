@@ -25,7 +25,7 @@ import controllers.SupprimerAdherents;
 /**
  *
  * @author Nicolas
- *         le arobase signifie "Salut c'est moi la Servlet qu'on surnomme Accueil"
+ *         le arobase signifie "Salut c'est moi la Servlet qu'on surnomme Accueil
  */
 
 @WebServlet(urlPatterns = { "/accueil" })

@@ -2,7 +2,7 @@
 <body>
 <div class="container-fluid">
 
-<% @include file="navbar.jsp" %>
+  <jsp:include page="navbar.jsp" />
 
 CECI EST UNE 
 <h1> ENORME </h1>

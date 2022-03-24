@@ -5,12 +5,17 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <jsp:include page="imports.jsp" />
+
 </head>
 <body>
-  
+
   <jsp:include page="navbar.jsp"/>
-  
-  <button> BONJOUR  </button>
+
+  <div class="alert alert-primary" role="alert">
+  BONJOUR
+  </div>
+
   <div class="row">
     J'ai dit : 
     Bonjour ! 
@@ -21,5 +26,3 @@
 
 </body>
 </html>
-
-

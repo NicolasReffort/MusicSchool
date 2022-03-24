@@ -4,6 +4,6 @@ import javax.servlet.http.HttpServletResponse;
 
 public class ListerAdherents implements ICommand {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        return "index.jsp";
+        return "lister.jsp";
     }
 }

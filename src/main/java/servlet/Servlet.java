@@ -31,6 +31,7 @@ import controllers.SupprimerAdherents;
 @WebServlet(urlPatterns = { "/accueil" })
 public class Servlet extends HttpServlet {
 
+    private String cheminJSP = "WEB-INF/JSP/";
     private Map<String, ICommand> maps = new HashMap<String, ICommand>();
 
     // CONSITUTION DU CARNET D ADRESSE DE L'OPERATRICE
@@ -69,13 +70,15 @@ public class Servlet extends HttpServlet {
             action = request.getParameter("action");
             ICommand controller = (ICommand) maps.get(action); // on récupère l’objet de la classe du contrôleur voulu
             String urlSuite = controller.execute(request, response);
-            request.getRequestDispatcher(urlSuite).forward(request, response);
+            request.getRequestDispatcher(cheminJSP + urlSuite).forward(request, response);
 
         } catch (Exception e) {
             e.printStackTrace();
             log(e.getMessage() + "Erreur inconnue lors de la requête");
-            request.getRequestDispatcher("erreur.jsp").forward(request, response);
+            request.getRequestDispatcher(cheminJSP + "erreur.jsp").forward(request, response);
         }
     }
+
+    
 
 }

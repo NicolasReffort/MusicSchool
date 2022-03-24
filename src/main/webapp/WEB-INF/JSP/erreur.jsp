@@ -11,8 +11,7 @@ CECI EST UNE
  
   AB-SO-LU-MENT PAS!
 
-  <img src="/src/main/resources/404.jpg" class="img-fluid rounded-circle" alt="">
-
+  <img src="/src/main/resources/404.jpg" > 
 </div>
 </body>
 </html>

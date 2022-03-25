@@ -46,7 +46,7 @@ public class Personne {
     //CONSTRUCTEUR VIDE 
     Personne(){}
 
-    Personne(String nom, String  prenom, Integer age){
+    public Personne(String nom, String  prenom, Integer age){
         this.nom = nom;
         this.prenom = prenom; 
         setIdentifiant(age);

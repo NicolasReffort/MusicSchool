@@ -13,9 +13,31 @@
   <H1>
     PAGE CREATION  
   </H1>
-  <div class="row">
 
+  <div class="row">
+    <%@ page import="java.util.Date" %>
+    <strong> Nous sommes le :  </strong>: <%=new Date() %>
   </div>
+  
+
+  <div class="row">
+    <strong> Les membres sont :</strong> 
+    ${ requestScope.mapStars}
+    <br><br>
+  </div>
+  
+  <%-- <div class="row">
+    <strong>No scope:</strong> ${personne.value}
+    <br><br>
+  </div> --%>
+
+
+
+  <!-- <%
+  String user = request.getParameter("id");
+  String pwd = request.getParameter("password");
+  %> -->
+  
   <br>
 
   <jsp:include page="footer.jsp" />

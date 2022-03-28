@@ -18,5 +18,12 @@
 		<location>/WEB-INF/JSP/erreur.jsp</location>
 	</error-page>
 
+	<!-- Pour avoir une inclusion du JavaServerStandard Library d'office dans les pages .jps -->
+	<jsp-config>
+		<jsp-property-group>
+			<url-pattern>*.jsp</url-pattern>
+			<include-prelude>/WEB-INF/JSP/taglibs.jsp</include-prelude>
+		</jsp-property-group>
+	</jsp-config>
 
 </web-app>

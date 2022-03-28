@@ -46,10 +46,10 @@ public class Personne {
     //CONSTRUCTEUR VIDE 
     Personne(){}
 
-    public Personne(String nom, String  prenom, Integer age){
+    public Personne(String nom, String  prenom, Integer identifiant){
         this.nom = nom;
-        this.prenom = prenom; 
-        setIdentifiant(age);
+        this.prenom = prenom;
+        setIdentifiant(identifiant);
     }
     
 }

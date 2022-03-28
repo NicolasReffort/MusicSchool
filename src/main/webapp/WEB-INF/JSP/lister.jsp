@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <jsp:include page="head.jsp" />
   <title>Document</title>
+  <jsp:include page="imports.jsp" />
 </head>
 <body>
 
   <jsp:include page="navbar.jsp" />
 
   <H1>
-    PAGE LISTE  
+    PAGE LISTE
   </H1>
-  <div class="row">
 
+  <div class="row">
   </div>
+  
   <br>
 
   <jsp:include page="footer.jsp" />

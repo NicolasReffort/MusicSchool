@@ -1,4 +1,8 @@
 <html>
+<head>
+<jsp:include page="imports.jsp" />
+</head>
+
 <body>
 <div class="container-fluid">
   <jsp:include page="navbar.jsp" />

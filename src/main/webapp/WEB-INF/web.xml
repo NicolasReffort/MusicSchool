@@ -22,8 +22,10 @@
 	<jsp-config>
 		<jsp-property-group>
 			<url-pattern>*.jsp</url-pattern>
-			<include-prelude>/WEB-INF/JSP/taglibs.jsp</include-prelude>
+			<page-encoding>UTF-8</page-encoding>
+			<include-prelude>
+				/WEB-INF/JSP/taglibs.jsp
+			</include-prelude>		
 		</jsp-property-group>
-	</jsp-config>
-
-</web-app>
+	</jsp-config>			
+</web-app>                                                                                                                                                                                                                                                                   

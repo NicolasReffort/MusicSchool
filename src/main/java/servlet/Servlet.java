@@ -57,6 +57,7 @@ public class Servlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+  
         processRequest(request, response);
     }
 
@@ -65,7 +66,6 @@ public class Servlet extends HttpServlet {
             throws ServletException, IOException {
 
         String action;  
-
         try {
             action = request.getParameter("action");
             ICommand controller = (ICommand) maps.get(action); // on récupère l’objet de la classe du contrôleur voulu

@@ -20,69 +20,55 @@
   <div class="row">
    <form method="post" action="?action=creer">
 
-       <label for="nom">Nom : </label>
-       <input type="text" name="nom" id="nom" />       
+      <label for="nom">Nom : </label>
+      <input type="text" name="nom" id="nom" />       
 
-       <label for="prenom"> Prénom : </label>
-       <input type="prenom" name="prenom" id="prenom" />       
+      <label for="prenom"> Prénom : </label>
+      <input type="prenom" name="prenom" id="prenom" />       
 
-       <label for="oeuvre">oeuvre : </label>
-       <input type="text" name="oeuvre" id="oeuvre" />  
-           
-       <input type="submit" />
+      <label for="id">id : </label>
+      <input type="id" name="id" id="id" />  
+          
+      <input type="submit" />
 
    </form>
   </div>
-
-    <c:out value= "${ nom }" />  est le retour du formulaire  !
-
-  
   
   <div class="row">
-    <strong> Les tableaux sont  :</strong> 
+    <strong> Les membres sont  :</strong> 
     
-    <c:forEach items="${tableaux}" var="tableau" >
+    <c:forEach items="${membres}" var="membre" >
     
-      <c:set var="age" value="${tableau[0].identifiant}" scope="page" />
+      <c:set var="age" value="${membre.identifiant}" scope="page" />
       
       <p>
-        ${ empty tableau[0].nom ? " (Le nom est vide pour ce mec)" : tableau[0].nom }       
-        a peint 
-       <c:out value= "${tableau[1]}" />  , il est  mort à l'âge de    
-       <c:out value= "${tableau[0].identifiant}" />  ans. 
-       <c:out value= "${age}" />  ans  !
-      
+        ${empty membre.nom ? " (Le nom est vide pour ce mec)" : membre.nom  }
+         ${empty membre.prenom ? " (Le prénom est vide pour ce mec)" : membre.prenom  }            
+       <c:out value= "${membre.identifiant}" />      
       </p>
 
       <p> 
-      <c:if test="${ age > 50 }" var="variable">
-      Quel crôuton.
+      <c:if test="${ membre.identifiant > 50 }" var="variable">
+       Quel grand identifiant.
       </c:if>
       <p/>
 
       <c:choose>
 
-        <c:when test="${ tableau[0].nom == 'Picasso' }">
+        <c:when test="${membre.nom == 'Picasso'}">
          <p> (C'est un espagnol) <p/> 
         </c:when>
 
-        <c:when test="${ tableau[0].nom == 'De Vinci'}">
+        <c:when test="${membre.nom == 'De Vinci'}">
         (C'est un rital)
         </c:when>
 
-        <c:otherwise> (nationalité indifférente) 
+        <c:otherwise> (Sa nationalité indifférente) 
         </c:otherwise>
 
       </c:choose>
-
-
         
-
-    </c:forEach>
-
-
-
-    
+    </c:forEach> 
 
   </div> 
   

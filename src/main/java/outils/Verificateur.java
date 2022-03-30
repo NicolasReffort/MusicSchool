@@ -22,11 +22,11 @@ public class  Verificateur {
     /**
      * 
      * @param unePersonne une personne de la classe Personne (TO DO : utiliser la généricité pour l'étendre à tous les objets)
-     * @return null si pas d'erreur, sinon retour une liste des messages d'erreur, en String. 
+     * @return liste d'erreur vide si pas d'erreur, sinon retour une liste des messages d'erreur, en String. 
      */
     public static List<String> areMyAttributesOk(Personne unePersonne){
 
-    Set<ConstraintViolation<Personne>> violations = null ;
+    Set<ConstraintViolation<Personne>> violations = null;
     Logger logger = Logger.getLogger(Verificateur.class.getName());
     List<String>  listesErreurs = new ArrayList<>(); 
 
@@ -42,17 +42,14 @@ public class  Verificateur {
         logger.log(Level.INFO, rte.getMessage());
     }
 
-    if(violations.isEmpty()){
-        return null; 
-    }
-    else{
+    if(!violations.isEmpty()){
         for (ConstraintViolation<Personne> violation:violations ){
             listesErreurs.add(violation.getMessage());  
         }
-        return listesErreurs; 
     }    
+    return listesErreurs;
+
     }
-
-
+  
 
 }

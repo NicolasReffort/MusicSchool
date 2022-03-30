@@ -52,6 +52,7 @@
           Saisie invalide : 
           <c:forEach items="${erreurs}" var="erreur" >             
             <c:out value="${erreur}" />
+            <br>
           </c:forEach>
         </div>
 
@@ -82,7 +83,6 @@
        ☻ Création réussie. 
       </div>    
      
-
  
     </c:when>
 
@@ -120,29 +120,6 @@
 
   </c:choose> 
   </div>
-  
-  
-<%-- 
-   <p> 
-        <c:if test="${ membre.identifiant > 50 }" var="variable">
-        Quel grand identifiant.
-        </c:if>
-    <p/>
-
-    <c:choose>
-
-      <c:when test="${membre.nom == 'Picasso'}">
-      <p> (C'est un espagnol) <p/> 
-      </c:when>
-
-      <c:when test="${membre.nom == 'De Vinci'}">
-      (C'est un rital)
-      </c:when>
-
-      <c:otherwise> (Sa nationalité indifférente) 
-      </c:otherwise>
-
-    </c:choose> --%>
 
   <jsp:include page="footer.jsp" />
 

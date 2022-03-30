@@ -73,7 +73,6 @@ public class ModifierAdherents implements ICommand {
                      membre.setIdentifiant(666);
                 }
             }    
-
         }  
 
         else{ //on fait un premier affichage des membres à modifier

@@ -13,11 +13,14 @@
     <strong> Nous sommes le :  </strong>: <%=new Date() %>
   </div>
 
+  <div class="row">
+  
+
   <c:choose>
 
     <c:when test="${unePersonneChoisie}">
       <H1>
-        PAGE MODIFICATION DE .... <c:out value="${membreToModifier.nom}"  />
+        PAGE MODIFICATION DE ... <c:out value="${membreToModifier.nom}"  />
       </H1>
 
       <div class="row">
@@ -41,6 +44,18 @@
       <H1>
         PAGE CREATION
       </H1>
+      
+        
+
+      <c:if test="${erreurDetectee == 'true'}">
+        <div class="alert alert-warning" role="alert">
+          Saisie invalide : 
+          <c:forEach items="${erreurs}" var="erreur" >             
+            <c:out value="${erreur}" />
+          </c:forEach>
+        </div>
+
+      </c:if>
 
       <div class="row">
         
@@ -104,6 +119,7 @@
     </c:otherwise>
 
   </c:choose> 
+  </div>
   
   
 <%-- 

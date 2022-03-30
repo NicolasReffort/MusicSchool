@@ -16,9 +16,8 @@ import javax.validation.ValidatorFactory;
 
 /**
  */
- class PersonneTest
- 
-{   
+ class PersonneTest{   
+     
     ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
     Validator validator = factory.getValidator();
 
@@ -80,7 +79,7 @@ import javax.validation.ValidatorFactory;
     }
 
     @ParameterizedTest
-    @ValueSource(ints = { 0, 133,  })
+    @ValueSource(ints = { 0,  })
 
     public void testerAge(Integer mauvaisAge) {
 

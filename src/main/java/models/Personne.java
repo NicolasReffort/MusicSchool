@@ -15,7 +15,7 @@ public class Personne {
     private Integer identifiant;
 
     @Nonnull
-    @Size (min = 1, max = 30, message = "Le nom est beaucoup trop long")
+    @Size ( min = 1, max = 30, message = "Le nom doit faire entre 2 et 30 caractères")
     private String nom;
 
     @Nonnull 

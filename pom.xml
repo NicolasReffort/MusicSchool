@@ -153,7 +153,7 @@
 
                 <!-- <cargo.remote.username>tomcat</cargo.remote.username> -->
                 <!-- <cargo.remote.password>tomcat</cargo.remote.password> -->
-                <cargo.servlet.port>9080</cargo.servlet.port>
+                <cargo.servlet.port>8080</cargo.servlet.port>
 				
               </properties>
             </configuration>

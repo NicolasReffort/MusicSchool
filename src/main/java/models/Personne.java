@@ -9,18 +9,17 @@ import javax.validation.constraints.Size;
  *  Une personne
  */
 public class Personne {
-
  
-    @Min(value = 1, message = "L'âge doit être compris entre 1 et 132 ans" )
-    @Max (value = 132) //Jame Calment + 10 ans 
+    @Nonnull
+    @Min(value = 1, message = "l'identifiant ne peut pas être inférieur à 1" )
     private Integer identifiant;
 
     @Nonnull
-    @Size (min = 1, max = 30, message = "Ton nom est beaucoup trop long")
+    @Size (min = 1, max = 30, message = "Le nom est beaucoup trop long")
     private String nom;
 
     @Nonnull 
-    @Size (min = 2, message = "Prénom trop court") 
+    @Size (min = 2, message = "Le prénom est trop court") 
     private String prenom; 
 
     public Integer getIdentifiant() {
@@ -49,7 +48,7 @@ public class Personne {
     public Personne(String nom, String  prenom, Integer identifiant){
         this.nom = nom;
         this.prenom = prenom;
-        setIdentifiant(identifiant);
+        this.identifiant = identifiant; 
     }
     
 }

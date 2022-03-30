@@ -8,32 +8,86 @@ import java.util.logging.Logger;
 import models.Personne;
 
 public class ModifierAdherents implements ICommand {
+
     public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         Logger logger = Logger.getLogger(CreerAdherents.class.getName());
 
-        String nom = request.getParameter("nom");
-        String prenom = request.getParameter("prenom");
-        Integer id = 0;
+        Integer idToModifier = 0 ;
+        ArrayList<Personne> membres = new ArrayList<Personne>();
+        final String parametreChoixSelect = "idFromSelect"; 
+        final String parametreIdToModifier = "idToModifier"; 
 
-        try {
-            id = Integer.parseInt(request.getParameter("id"));
-        } catch (NumberFormatException nfe) {
-            logger.log(Level.INFO, "Id non parsable");
-        }
+        String nomModifie; 
+        String prenomModifie;
 
+        Boolean unePersonneChoisie = false ; //si la requete contient le parametreChoixSelect c'est que l'utilisateur a  sélectionné une personne à modifier
+        Boolean unePersonneModifiee = false ; // si la requete contient le parametreIdToModifier c'est que l'utilisateur a modifié la personne
+
+        // recupérer la collection :
         Personne leonard = new Personne("De Vinci", "Léonard", 50);
         Personne pablo = new Personne("Picasso", "Pablo", 60);
         Personne david = new Personne("David", "Jacques-Louis", 77);
-
-        ArrayList<Personne> membres = new ArrayList<Personne>();
         membres.add(leonard);
         membres.add(pablo);
         membres.add(david);
-        membres.add(new Personne(nom, prenom, id));
 
-        request.setAttribute("membres", membres);
+        if (request.getParameterMap().containsKey(parametreChoixSelect) &&
+            (!request.getParameter(parametreChoixSelect).trim().isEmpty() )) {
+            unePersonneChoisie = true;             
+        }; 
+        
+        if ( ( request.getParameterMap().containsKey(parametreIdToModifier) ) &&
+            (!request.getParameter(parametreIdToModifier).trim().isEmpty() )) {
+            unePersonneModifiee = true; 
+        }; 
+
+        if (unePersonneChoisie){
+            try {
+                idToModifier = Integer.parseInt(request.getParameter(parametreChoixSelect));
+            } catch (NumberFormatException nfe) {
+                logger.log(Level.INFO, "Id non parsable");
+            }
+
+            // on relit l'id à la personne, personne qu'on renvoit à la JSP pour modification
+            for (Personne membre : membres) {
+
+                if ((membre.getIdentifiant()) == idToModifier) {
+                    request.setAttribute("membreToModifier", membre);
+                }
+            }
+        }
+
+        if(unePersonneModifiee){
+
+            nomModifie = request.getParameter("nom");
+            prenomModifie = request.getParameter("prenom");
+            //to do tester les valeurs reçus
+    
+              //on relit l'id à la personne
+            for (Personne membre:membres){
+                
+                 if (( membre.getIdentifiant() ) == idToModifier){ //on fait les mises à jour
+                     membre.setNom(nomModifie);
+                     membre.setPrenom(prenomModifie);
+                     membre.setIdentifiant(666);
+                }
+            }    
+
+        }  
+
+        else{ //on fait un premier affichage des membres à modifier
+            request.setAttribute("membres", membres);
+        }        
+        
+        //dans tous les cas on renvoit les flags d'état :                          
+        request.setAttribute("unePersonneChoisie", unePersonneChoisie);
+        request.setAttribute("unePersonneModifiee", unePersonneModifiee);
 
         return "save.jsp";
+
     }
 }
+
+
+

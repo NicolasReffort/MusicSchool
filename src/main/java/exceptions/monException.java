@@ -1,23 +1,28 @@
 package exceptions;
 
-public class monException extends Exception {
-    // PACKAGE A PART !!!!
-    private int gravite; 
+public class MonException extends Exception {
 
-    public void setGravite(int gravite) {
-        this.gravite = gravite;
-    }
+  /** seuil de gravité d'une erreur.
+   * 
+   */
+  private int gravite; 
 
-    public monException(String message) {
+  
+  public final void setGravite(final int graviteMessage) {
+    this.gravite = graviteMessage;        
+  }
+  /** constructeur erreur sans message.
+   * @param message message d'erreur 
+   */
+  public MonException(final String message) {
 
-        super(message);
+    super(message);
 
-    }
-    public monException(String message, int gravite) {
+  }
+  public MonException(final String message, final int graviteMessage) {
 
-        super(message); 
-        setGravite(gravite);
-
-    }
+    super(message); 
+    setGravite(graviteMessage);
+  }
 
 }

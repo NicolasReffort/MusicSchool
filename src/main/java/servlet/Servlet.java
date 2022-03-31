@@ -25,60 +25,62 @@ import controllers.SupprimerAdherents;
 /**
  *
  * @author Nicolas
- *         le arobase signifie "Salut c'est moi la Servlet qu'on surnomme Accueil
+ *     le arobase signifie "Salut c'est moi la Servlet qu'on surnomme Accueil
  */
 
 @WebServlet(urlPatterns = { "/accueil" })
 public class Servlet extends HttpServlet {
 
-    private String cheminJSP = "WEB-INF/JSP/";
-    private Map<String, ICommand> maps = new HashMap<String, ICommand>();
+  private String cheminJSP = "WEB-INF/JSP/";
+  private Map<String, ICommand> maps = new HashMap<String, ICommand>();
 
-    // CONSITUTION DU CARNET D ADRESSE DE L'OPERATRICE
-    public void init() {
-        maps.put(null, new PageAccueilController());
-        maps.put("accueil", new PageAccueilController());
-        maps.put("lister", new ListerAdherents());
-        maps.put("creer", new CreerAdherents());
-        maps.put("modifier", new ModifierAdherents());
-        maps.put("supprimer", new SupprimerAdherents());
+  // CONSITUTION DU CARNET D ADRESSE DE L'OPERATRICE
+  public final void init() {
+    maps.put(null, new PageAccueilController());
+    maps.put("accueil", new PageAccueilController());
+    maps.put("lister", new ListerAdherents());
+    maps.put("creer", new CreerAdherents());
+    maps.put("modifier", new ModifierAdherents());
+    maps.put("supprimer", new SupprimerAdherents());
+  }
+
+  /** 
+   */
+  @Override
+  protected void doGet(final HttpServletRequest request,
+  final HttpServletResponse response)
+      throws ServletException, IOException {
+    processRequest(request, response);
+  }
+
+  /**
+   */
+  @Override
+  protected void doPost(final HttpServletRequest request,
+      final HttpServletResponse response)
+      throws ServletException, IOException {
+ 
+    processRequest(request, response);
+  }
+
+  // CONSIGNE POUR L'OPERATRICE
+  protected final void processRequest(final HttpServletRequest request,
+  final HttpServletResponse response)
+      throws ServletException, IOException {
+
+    String action; 
+    try {
+      action = request.getParameter("action");
+      // on récupère l’objet de la classe du contrôleur voulu
+      ICommand controller =
+       (ICommand) maps.get(action); 
+      String urlSuite = controller.execute(request, response);
+      request.getRequestDispatcher(cheminJSP + urlSuite).forward(request, response);
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      log(e.getMessage() + "Erreur inconnue lors de la requête");
+      request.getRequestDispatcher(cheminJSP + "erreur.jsp").forward(request, response);
     }
-
-    /**  
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    /**
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-  
-        processRequest(request, response);
-    }
-
-    // CONSIGNE POUR L'OPERATRICE
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-        String action;  
-        try {
-            action = request.getParameter("action");
-            ICommand controller = (ICommand) maps.get(action); // on récupère l’objet de la classe du contrôleur voulu
-            String urlSuite = controller.execute(request, response);
-            request.getRequestDispatcher(cheminJSP + urlSuite).forward(request, response);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            log(e.getMessage() + "Erreur inconnue lors de la requête");
-            request.getRequestDispatcher(cheminJSP + "erreur.jsp").forward(request, response);
-        }
-    }
-
-    
-
+  }  
 }

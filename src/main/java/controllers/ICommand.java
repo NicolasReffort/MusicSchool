@@ -5,6 +5,13 @@ import javax.servlet.http.HttpServletResponse;
 
 public interface ICommand {
 
-    public String execute(HttpServletRequest request,HttpServletResponse response)
-     throws Exception;  
+  /**
+   * 
+   * @param request
+   * @param response
+   * @return qqchose
+   * @throws Exception
+   */
+  public String execute(HttpServletRequest request,HttpServletResponse response)
+   throws Exception; 
 }

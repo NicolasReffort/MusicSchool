@@ -1,52 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+ <modelVersion>4.0.0</modelVersion>
 
-  <groupId>ecoleMusique</groupId>
-  <artifactId>ecole</artifactId>
-  <version>1.0-SNAPSHOT</version>
-  <packaging>war</packaging>
+ <groupId>ecoleMusique</groupId>
+ <artifactId>ecole</artifactId>
+ <version>1.0-SNAPSHOT</version>
+ <packaging>war</packaging>
 
-  <name>ecole Maven Webapp</name>
-  <!-- FIXME change it to the project's website -->
-  <url>http://www.example.com</url>
+ <name>ecole Maven Webapp</name>
+ <!-- FIXME change it to the project's website -->
+ <url>http://www.example.com</url>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
-  </properties>
+ <properties>
+  <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  <maven.compiler.source>1.8</maven.compiler.source>
+  <maven.compiler.target>1.8</maven.compiler.target>
+ </properties>
 
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.11</version>
-      <scope>test</scope>
-    </dependency>
-    
+ <dependencies>
+  <dependency>
+   <groupId>junit</groupId>
+   <artifactId>junit</artifactId>
+   <version>4.11</version>
+   <scope>test</scope>
+  </dependency>
+  
 <!-- JUNIT JUPITER -->
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-api</artifactId>
-      <version>5.8.2</version>
-      <scope>test</scope>
-    </dependency>
+  <dependency>
+   <groupId>org.junit.jupiter</groupId>
+   <artifactId>junit-jupiter-api</artifactId>
+   <version>5.8.2</version>
+   <scope>test</scope>
+  </dependency>
 
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-engine</artifactId>
-      <version>5.8.2</version>
-      <scope>test</scope>
-    </dependency>
+  <dependency>
+   <groupId>org.junit.jupiter</groupId>
+   <artifactId>junit-jupiter-engine</artifactId>
+   <version>5.8.2</version>
+   <scope>test</scope>
+  </dependency>
 
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-params</artifactId>
-      <version> 5.8.2</version>
-    </dependency>
+  <dependency>
+   <groupId>org.junit.jupiter</groupId>
+   <artifactId>junit-jupiter-params</artifactId>
+   <version> 5.8.2</version>
+  </dependency>
 
 	<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
 	<dependency>
@@ -63,102 +63,102 @@
 		<version>3.1.2</version>
 	</dependency> 
 
-    <!-- javax.validation/validation-api -->
-    <dependency>
-      <groupId>javax.validation</groupId>
-      <artifactId>validation-api</artifactId>
-      <version>2.0.1.Final</version>
-    </dependency>
-  
-    <dependency>
-      <groupId>org.hibernate</groupId>
-      <artifactId>hibernate-validator</artifactId>
-      <version>6.0.2.Final</version>
-    </dependency>
+  <!-- javax.validation/validation-api -->
+  <dependency>
+   <groupId>javax.validation</groupId>
+   <artifactId>validation-api</artifactId>
+   <version>2.0.1.Final</version>
+  </dependency>
+ 
+  <dependency>
+   <groupId>org.hibernate</groupId>
+   <artifactId>hibernate-validator</artifactId>
+   <version>6.0.2.Final</version>
+  </dependency>
 
-    <dependency>
-      <groupId>javax.el</groupId>
-      <artifactId>javax.el-api</artifactId>
-      <version>3.0.0</version>
-    </dependency>
+  <dependency>
+   <groupId>javax.el</groupId>
+   <artifactId>javax.el-api</artifactId>
+   <version>3.0.0</version>
+  </dependency>
 
-    <dependency>
-      <groupId>org.glassfish.web</groupId>
-      <artifactId>javax.el</artifactId>
-      <version>2.2.4</version>
-    </dependency>
+  <dependency>
+   <groupId>org.glassfish.web</groupId>
+   <artifactId>javax.el</artifactId>
+   <version>2.2.4</version>
+  </dependency>
 
-    <!-- https://mvnrepository.com/artifact/javax.servlet/jstl -->
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>jstl</artifactId>
-      <version>1.2</version>
-    </dependency>
+  <!-- https://mvnrepository.com/artifact/javax.servlet/jstl -->
+  <dependency>
+   <groupId>javax.servlet</groupId>
+   <artifactId>jstl</artifactId>
+   <version>1.2</version>
+  </dependency>
 
 
-  </dependencies>
+ </dependencies>
 
-  <build>
-    <finalName>ecole</finalName>
-    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
-      <plugins>
-        <plugin>
-          <artifactId>maven-clean-plugin</artifactId>
-          <version>3.1.0</version>
-        </plugin>
-        <!-- see http://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_war_packaging -->
-        <plugin>
-          <artifactId>maven-resources-plugin</artifactId>
-          <version>3.0.2</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.8.0</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-surefire-plugin</artifactId>
-          <version>2.22.1</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-war-plugin</artifactId>
-          <version>3.2.2</version>
-        </plugin>
+ <build>
+  <finalName>ecole</finalName>
+  <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+   <plugins>
+    <plugin>
+     <artifactId>maven-clean-plugin</artifactId>
+     <version>3.1.0</version>
+    </plugin>
+    <!-- see http://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_war_packaging -->
+    <plugin>
+     <artifactId>maven-resources-plugin</artifactId>
+     <version>3.0.2</version>
+    </plugin>
+    <plugin>
+     <artifactId>maven-compiler-plugin</artifactId>
+     <version>3.8.0</version>
+    </plugin>
+    <plugin>
+     <artifactId>maven-surefire-plugin</artifactId>
+     <version>2.22.1</version>
+    </plugin>
+    <plugin>
+     <artifactId>maven-war-plugin</artifactId>
+     <version>3.2.2</version>
+    </plugin>
 		
-        <plugin>
-          <artifactId>maven-install-plugin</artifactId>
-          <version>2.5.2</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-deploy-plugin</artifactId>
-          <version>2.8.2</version>
-        </plugin>		
+    <plugin>
+     <artifactId>maven-install-plugin</artifactId>
+     <version>2.5.2</version>
+    </plugin>
+    <plugin>
+     <artifactId>maven-deploy-plugin</artifactId>
+     <version>2.8.2</version>
+    </plugin>		
 
 		<plugin>
-          <groupId>org.codehaus.cargo</groupId>
-          <artifactId>cargo-maven2-plugin</artifactId>
-          <version>1.7.11</version>
-          <configuration>
-            <container>
-                <containerId>tomcat9x</containerId>
-                <type>remote</type>
-            </container>
-            <configuration>
-              <type>runtime</type>
-              <properties>
-                <cargo.tomcat.context.reloadable>true</cargo.tomcat.context.reloadable>	
+     <groupId>org.codehaus.cargo</groupId>
+     <artifactId>cargo-maven2-plugin</artifactId>
+     <version>1.7.11</version>
+     <configuration>
+      <container>
+        <containerId>tomcat9x</containerId>
+        <type>remote</type>
+      </container>
+      <configuration>
+       <type>runtime</type>
+       <properties>
+        <cargo.tomcat.context.reloadable>true</cargo.tomcat.context.reloadable>	
 				
 				<cargo.remote.username>${catalina.admin.username}</cargo.remote.username>
 				<cargo.remote.password>${catalina.admin.password}</cargo.remote.password>
 				<cargo.tomcat.manager.url>${catalina.manager.url</cargo.tomcat.manager.url>
 
-                <!-- <cargo.remote.username>tomcat</cargo.remote.username> -->
-                <!-- <cargo.remote.password>tomcat</cargo.remote.password> -->
-                <cargo.servlet.port>9080</cargo.servlet.port>
+        <!-- <cargo.remote.username>tomcat</cargo.remote.username> -->
+        <!-- <cargo.remote.password>tomcat</cargo.remote.password> -->
+        <cargo.servlet.port>9080</cargo.servlet.port>
 				
-              </properties>
-            </configuration>
-          </configuration>
-        </plugin>
+       </properties>
+      </configuration>
+     </configuration>
+    </plugin>
 		
 		<!-- CHECKSTYLE -->
 		<plugin>
@@ -174,7 +174,7 @@
 			</dependencies>
 		</plugin>
 		
-      </plugins>
-    </pluginManagement>
-  </build>
+   </plugins>
+  </pluginManagement>
+ </build>
 </project>

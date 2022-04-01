@@ -26,18 +26,18 @@ public class CreerAdherents implements ICommand {
 
     String prenomCreation; 
     ArrayList<Personne> membres = new ArrayList<Personne>();
-    final String parametreToCreate = "nomToCreate";
+    final String savoirSiCreationSouhaitee = "nom";
     String creation = "";
     List<String> erreurs; 
     Boolean erreurDetectee = false; 
 
     //SI on a un paramètre issue de la création c'est que
     // l'user a déjà cliqué sur créer. 
-    if (request.getParameterMap().containsKey(parametreToCreate)) {  
+    if (request.getParameterMap().containsKey(savoirSiCreationSouhaitee)) {  
 
       creation = "asked"; 
-      nomCreation = request.getParameter("nomToCreate");
-      prenomCreation = request.getParameter("prenomToCreate"); 
+      nomCreation = request.getParameter("nom");
+      prenomCreation = request.getParameter("prenom"); 
       // tester les valeurs reçus avec BeanValidator
       erreurs = Verificateur.areMyAttributesOk(
         new Personne(nomCreation, prenomCreation, 1)); 
@@ -72,8 +72,7 @@ public class CreerAdherents implements ICommand {
     // et on renvoie le statut de la création
     request.setAttribute("creation", creation);      
     return "save.jsp";        
-        
-  
+          
   }
 }
  

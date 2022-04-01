@@ -14,7 +14,9 @@ import models.Personne;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Verificateur{
+public final class Verificateur {
+
+  private Verificateur() { }; 
 
   /**
    * @param unePersonne une personne de la classe Personne 
@@ -37,7 +39,7 @@ public class Verificateur{
   } catch (RuntimeException rte) {
     logger.log(Level.INFO, rte.getMessage());
   }
-
+  
   if (!violations.isEmpty()) {
     for (ConstraintViolation<Personne> violation:violations) {
       listesErreurs.add(violation.getMessage()); 

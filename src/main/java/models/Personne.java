@@ -4,16 +4,21 @@ import javax.annotation.Nonnull;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
+import exceptions.MonException;
+
 /** Une personne.
  */
 public class Personne {
+
+  private final String MSG_CHAMPS_IDENTIQUES =
+   "Les champs ne peuvent pas avoir la même valeur"; 
  
   @Nonnull
   @Min(value = 1, message = "l'identifiant ne peut pas être inférieur à 1")
   private Integer identifiant;
 
   @Nonnull
-  @Size (min = 1, max = 30,
+  @Size (min = 2, max = 30,
    message = "Le nom doit faire entre 2 et 30 caractères")
   private String nom;
 
@@ -31,7 +36,7 @@ public class Personne {
   public final String getNom() {
     return nom;
   }
-  public final void setNom(final String nomASetter) {
+  public final void setNom(final String nomASetter) throws MonException {
     this.nom = nomASetter;
   }
   public final String getPrenom() {
@@ -42,13 +47,12 @@ public class Personne {
     this.prenom = prenomASetter;
   }
   //CONSTRUCTEUR VIDE 
-  Personne() { };
+  public Personne() { };
 
   public Personne(final String nomASetter,
    final String prenomASetter, final Integer identifiantASetter) {
     this.nom = nomASetter;
     this.prenom = prenomASetter;
     this.identifiant = identifiantASetter; 
-  }
-  
+  }  
 }

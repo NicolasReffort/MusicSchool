@@ -13,40 +13,77 @@
   <strong> Nous sommes le : </strong>: <%=new Date() %>
  </div>
 
+ DEBUG
+
  <div class="row">
+unePersonneChoisieDansLeSelect
+ <c:out value="${unePersonneChoisieDansLeSelect}"/>  ; 
+  <br>
+
+ <div class="row">
+unePersonneModifiee
+ <c:out value="${unePersonneModifiee}"/>  ; 
+  <br>
  
+ creation : 
+ <c:out value="${creation}"/>  ; 
+ <br>
 
- <c:choose>
+ succesModification :
+ <c:out value="${succesModification}"/>  ; 
+ <br>
+ erreurDetectee : 
+ <c:out value="${erreurDetectee}"/>  ; 
 
-  <c:when test="${unePersonneChoisie}">
-   <H1>
-    PAGE MODIFICATION DE ... <c:out value="${membreToModifier.nom}" />
-   </H1>
+ <br>
+ membreToModifier.identifiant : 
+ <c:out value="${membreToModifier.identifiant}"/>  ; 
 
-   <div class="row">
+les erreurs sont : 
+<c:out value="${erreurs}"/>  ;
+<br> 
+
+  <c:choose>
+
+  <%-- DEBUT AFFICHAGE DES SUCCES DES MODIF CREATION --%>
+  <c:when test="${creation == 'done' || succesModification}">
+ 
+   <div class="bg-success p-2 text-dark bg-opacity-50">
+    ☻ Opération réussie. 
+   </div>  
     
-    <form method="post" action="?action=creer">
-
-     <label for="nom">Nom</label>
-     <input type="text" value="${membreToModifier.nom}" name="nom" id="nom" />    
-
-     <label for="prenom"> Prénom : </label>
-     <input type="text" value="${membreToModifier.prenom}" name="prenom" id="prenom" />  
-
-     <input type="submit" />
-
-    </form>
-
-   </div>
   </c:when>
+  <%-- FIN AFFICHAGE DES SUCCES DES MODIF CREATION --%>
 
-  <c:when test="${creation == 'asked'}">
-   <H1>
-    PAGE CREATION
-   </H1>
+
+  <%-- DEBUT AFFICHAGE FORMULAIRES DE CREATION, ET MODIFICATION DE PERSONNE DETERMINEE,
+   unePersonneChoisieDansLeSelect = première étape 
+   unePersonneModifie = seconde étape --%>
+  <c:when test="${creation == 'asked' || unePersonneChoisieDansLeSelect || unePersonneModifiee  }" >
+  
+    <%-- EN FONCTION DE L ETAPE ON AFFECTE LES VARIABLES EN CONSEQUENCE --%>
+    <c:if test="${creation == 'asked'}">
+      <c:set var="h1" value="PAGE CREATION"/>  
+      <c:set var="action" value="?action=creer"/>  
+      <c:set var="inputNom" value="nom"/>  
+      <c:set var="inputPrenom" value="Prénom"/>    
+    </c:if>   
+      
+    <c:if test="${unePersonneChoisieDansLeSelect || erreurDetectee}">
+      <c:set var="h1" value="PAGE MODIFICATION"/>  
+      <c:set var="action" value="?action=modifier"/>  
+      <c:set var="action" value="?action=modifier"/>  
+      <c:set var="inputNom" value="${membreToModifier.nom}"/>  
+      <c:set var="inputPrenom" value="${membreToModifier.prenom}"/>  
+      <c:set var="inputId" value="${membreToModifier.identifiant}"/>  
+    </c:if>
+
+    <H1>
+      <c:out value="${h1}" />
+    </H1> 
+
    
-    
-
+     
    <c:if test="${erreurDetectee == 'true'}">
     <div class="alert alert-warning" role="alert">
      Saisie invalide : 
@@ -55,18 +92,22 @@
       <br>
      </c:forEach>
     </div>
-
    </c:if>
 
    <div class="row">
     
-    <form method="post" action="?action=creer">
+    <form method="post" action="${action}">
+     <label for="nom">
+      Nom
+     </label>
+     <input value="${inputNom}" type="text" name="nom" id="nom" /> 
 
-     <label for="nom">Nom : </label>
-     <input type="text" name="nomToCreate" id="nom" />    
+     <label for="prenom">
+      Prénom     
+      </label>
+     <input value="${inputPrenom}" type="text" name="prenom" id="prenom" />   
 
-     <label for="prenom"> Prénom : </label>
-     <input type="text" name="prenomToCreate" id="prenom" />    
+     <input type="hidden" value="${inputId}" name="identifiant" id="identifiant" />  
 
      <input type="submit" />
 
@@ -74,18 +115,10 @@
 
    </div>
   </c:when>
+  <%-- FIN AFFICHAGE FORMULAIRES DE CREATION, ET MODIFICATION DE PERSONNE DETERMINEE,
 
-  <c:when test="${creation == 'done'}">
-   <H1>
-    PAGE CREATION : 
-   </H1> 
-   <div class="bg-success p-2 text-dark bg-opacity-50">
-    ☻ Création réussie. 
-   </div>  
-   
- 
-  </c:when>
 
+  <%-- (PAR DEFAUT) AFFICHAGE DES MEMBRES A SELECTIONNER --%>
   <c:otherwise>   
    <H1>
     QUI VOULEZ-VOUS MODIFIER ?
@@ -117,8 +150,20 @@
     </div> 
 
   </c:otherwise>
+    <%-- FIN AFFICHAGE DES MEMBRES A SELECTIONNER --%>
+
 
  </c:choose> 
+
+  <br>
+ le formulaire va se diriger vers : 
+  <c:out value="${action}"/>  ; 
+  <br>
+
+ 
+ 
+
+
  </div>
 
  <jsp:include page="footer.jsp" />

@@ -24,7 +24,6 @@
             <c:forEach items="${membres}" var="membre" >   
             
                 <option value="${membre.identifiant}" > 
-                    ${empty membre.identifiant ? " (L'identifiant est vide)" : membre.identifiant }
                     ${empty membre.nom ? " (Le nom est vide)" : membre.nom }
                     ${empty membre.prenom ? " (Le prénom est vide)" : membre.prenom }
                 </option>  

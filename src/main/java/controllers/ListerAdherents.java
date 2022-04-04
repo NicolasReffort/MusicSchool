@@ -21,12 +21,13 @@ public class ListerAdherents implements ICommand {
     ArrayList<Personne> membres = new ArrayList<Personne>();
 
     // recupérer la collection :
-    Personne leonard = new Personne("De Vinci", "Léonard", 50);
-    Personne pablo = new Personne("Picasso", "Pablo", 60);
-    Personne david = new Personne("David", "Jacques-Louis", 77);
+    Personne leonard = new Personne("De Vinci", "Léonard", 1);
+    Personne pablo = new Personne("Picasso", "Pablo", 2);
+    Personne david = new Personne("David", "Jacques-Louis", 3);
     membres.add(leonard);
     membres.add(pablo);
     membres.add(david);
+
     request.setAttribute("membres", membres);
 
     return "lister.jsp";

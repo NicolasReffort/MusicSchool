@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.Personne;
+import models.forms.FormulaireCreation;
+import models.forms.FormulaireModification;
 import outils.Verificateur;
 
 public final class ModifierAdherents implements ICommand {
@@ -26,7 +28,9 @@ public final class ModifierAdherents implements ICommand {
     
     String nomModifie; 
     String prenomModifie;
-    List<String> erreurs;
+    Personne membreModifie = new Personne();
+
+    List<String> erreurs = new ArrayList<String>();
     Boolean erreurDetectee = false;
     Boolean unePersonneChoisieDansLeSelect = false; 
     /*si la requete contient le savoirSiSelectSelectionne, c'est que
@@ -80,7 +84,8 @@ public final class ModifierAdherents implements ICommand {
       }
     }
 
-    if (unePersonneModifiee) {      
+    if (unePersonneModifiee) {   
+      String retourForm;   
 
       // on lit ce qu'on vient de recevoir comme nouveaux attribubts
       nomModifie = request.getParameter("nom");
@@ -92,48 +97,59 @@ public final class ModifierAdherents implements ICommand {
         logger.log(Level.INFO, "Id non parsable");
 
       }
-      Personne membreModifie = new Personne(); 
+  
       
       // on relie l'id à la personne
       for (Personne membre : membres) {
         if ((membre.getIdentifiant()) == idToModifier) {
-          // on créé une personne pour aller passer les tests BeansValidator
-    
+          // on créé une personne pour aller passer les tests BeansValidator    
         membreModifie.setNom(nomModifie);
         membreModifie.setIdentifiant(idToModifier);
         membreModifie.setPrenom(prenomModifie);
-
         }
       }
       // on teste les valeurs reçues avec BeanValidator
-      erreurs = Verificateur.areMyAttributesOk(membreModifie);
+      erreurs = Verificateur.areMyAttributesOk(membreModifie);    
          
-      // tester les valeurs reçues avec tests supplémentaires
-      // if (nomModifie.trim() == prenomModifie.trim()) {
-      //   erreurs.add("Les champs ne doivent pas être identiques");
-      // }
-
-      // si erreurs, on renvoie avec elles
+      // si pas d'erreurs au niveau du BeanValidator
       if (erreurs.isEmpty()) {
-        succesModification = true;          
+
+        // on teste les valeurs reçues avec la classe forms adaptée
+        FormulaireModification monFormulaireModification =
+         new FormulaireModification();        
+        monFormulaireModification.areTwoFieldsEgals(request);
+        retourForm = monFormulaireModification.getMessage();         
+
+        // si le formulaire n'est pas validé on récupère le message d'erreur
+        if (!retourForm.trim().isEmpty()) {
+          erreurs.add(retourForm);
+          erreurDetectee = true;
+        } else {
+        // si pas erreurs, on renvoie avec succès
+          succesModification = true;
+        }
+                
       } else {
         erreurDetectee = true;        
-        request.setAttribute("erreurs", erreurs);
-        // si pas erreurs, on renvoie avec succès
+        //on renvoit le membre que l'user va essayer de modifier
         for (Personne membre : membres) {
-
+          
           if ((membre.getIdentifiant()) == idToModifier) {
             request.setAttribute("membreToModifier", membre);
+            
           }
         }
-      }
-      
+
+      }      
     }   
     
-    //dans tous les cas on renvoit:             
+    //dans tous les cas on renvoit:     
+    // on renvoit le membre saisi précédemment(attention : avec ses erreurs)
+    request.setAttribute("membreModifie", membreModifie);        
     request.setAttribute(
       "unePersonneChoisieDansLeSelect", unePersonneChoisieDansLeSelect);
     request.setAttribute("erreurDetectee", erreurDetectee);
+    request.setAttribute("erreurs", erreurs);
     request.setAttribute("succesModification", succesModification);    
     request.setAttribute("unePersonneModifiee", unePersonneModifiee);
     request.setAttribute("membres", membres);    

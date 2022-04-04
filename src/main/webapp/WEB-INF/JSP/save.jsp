@@ -95,23 +95,26 @@ les erreurs sont :
    </c:if>
 
    <div class="row">
-    
-    <form method="post" action="${action}">
-     <label for="nom">
-      Nom
-     </label>
-     <input value="${inputNom}" type="text" name="nom" id="nom" /> 
 
-     <label for="prenom">
-      Prénom     
-      </label>
-     <input value="${inputPrenom}" type="text" name="prenom" id="prenom" />   
+    <div class="col-5">    
+      <form method="post" action="${action}">
 
-     <input type="hidden" value="${inputId}" name="identifiant" id="identifiant" />  
+        <label for="nom">
+          Nom
+        </label>
+        <input value="${inputNom}" type="text" name="nom" id="nom" /> 
 
-     <input type="submit" />
+        <label for="prenom">
+          Prénom     
+          </label>
+        <input value="${inputPrenom}" type="text" name="prenom" id="prenom" />   
 
-    </form>
+        <input type="hidden" value="${inputId}" name="identifiant" id="identifiant" />  
+
+        <input type="submit" />
+
+      </form>
+    <div>
 
    </div>
   </c:when>
@@ -125,27 +128,30 @@ les erreurs sont :
    </H1>
 
     <div class="row">  
-     <form name="formModificationListe" action="?action=modifier" method="post">
+    
+      <div class="col-5">
+        <form name="formModificationListe" action="?action=modifier" method="post">
 
-      <select name="idFromSelect" class="col-8 form-select" aria-label="Default select example">
-       <option selected> 
-        <strong> Les membres sont :</strong> 
-       </option>
+          <select name="idFromSelect" class="col-8 form-select" aria-label="Default select example">
+            <option selected> 
+              <strong> Les membres sont :</strong> 
+            </option>
 
-       <c:forEach items="${membres}" var="membre" >   
-       
-        <option value="${membre.identifiant}" > 
-         ${empty membre.identifiant ? " (L'identifiant est vide)" : membre.identifiant }
-         ${empty membre.nom ? " (Le nom est vide)" : membre.nom }
-         ${empty membre.prenom ? " (Le prénom est vide)" : membre.prenom }
-        </option>  
-         
-       </c:forEach> 
-       
-       <input type="submit" value="Modifier ce crétin" />       
-      
-      </select>
-     </form>
+            <c:forEach items="${membres}" var="membre" >   
+            
+              <option value="${membre.identifiant}" > 
+              ${empty membre.identifiant ? " (L'identifiant est vide)" : membre.identifiant }
+              ${empty membre.nom ? " (Le nom est vide)" : membre.nom }
+              ${empty membre.prenom ? " (Le prénom est vide)" : membre.prenom }
+              </option>  
+              
+            </c:forEach> 
+            
+            <input type="submit" value="Modifier ce crétin" />       
+            
+          </select>
+        </form>
+      <div>
      
     </div> 
 
@@ -160,7 +166,15 @@ les erreurs sont :
   <c:out value="${action}"/>  ; 
   <br>
 
- 
+          <c:forEach items="${membres}" var="membre" >   
+            
+              <option value="${membre.identifiant}" > 
+              ${empty membre.identifiant ? " (L'identifiant est vide)" : membre.identifiant }
+              ${empty membre.nom ? " (Le nom est vide)" : membre.nom }
+              ${empty membre.prenom ? " (Le prénom est vide)" : membre.prenom }
+              </option>  
+              
+            </c:forEach> 
  
 
 

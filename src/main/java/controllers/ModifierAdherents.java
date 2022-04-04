@@ -1,10 +1,6 @@
 package controllers;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import exceptions.MonException;
-
-import java.lang.reflect.Member;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -33,22 +29,26 @@ public final class ModifierAdherents implements ICommand {
     List<String> erreurs;
     Boolean erreurDetectee = false;
     Boolean unePersonneChoisieDansLeSelect = false; 
-    //si la requete contient le savoirSiSelectSelectionne c'est que
-    // l'utilisateur a sélectionné une personne à modifier dans le select
+    /*si la requete contient le savoirSiSelectSelectionne, c'est que
+     l'utilisateur a sélectionné une personne à modifier dans le select*/
 
     Boolean unePersonneModifiee = false; 
     //si la requete contient le savoirSiPersonneEstModifie c'est que
-    //l'utilisateur a modifié la personne
+    //l'utilisateur a modifié la personne et renvoyé des données
    
     Boolean succesModification = false; 
-    
-    // recupérer la collection :
-    Personne leonard = new Personne("De Vinci", "Léonard", 50);
-    Personne pablo = new Personne("Picasso", "Pablo", 60);
-    Personne david = new Personne("David", "Jacques-Louis", 77);
-    membres.add(leonard);
-    membres.add(pablo);
-    membres.add(david);
+    //si la modification en Bdd a fonctionné
+
+    if (membres.isEmpty()) {
+      
+      // recupérer la collection :
+      Personne leonard = new Personne("De Vinci", "Léonard", 50);
+      Personne pablo = new Personne("Picasso", "Pablo", 60);
+      Personne david = new Personne("David", "Jacques-Louis", 77);
+      membres.add(leonard);
+      membres.add(pablo);
+      membres.add(david);
+    }
 
     final String savoirSiSelectSelectionne = "idFromSelect"; 
     final String savoirSiPersonneEstModifie = "identifiant"; 
@@ -130,7 +130,7 @@ public final class ModifierAdherents implements ICommand {
       
     }   
     
-    //dans tous les cas on renvoit les flags d'état :             
+    //dans tous les cas on renvoit:             
     request.setAttribute(
       "unePersonneChoisieDansLeSelect", unePersonneChoisieDansLeSelect);
     request.setAttribute("erreurDetectee", erreurDetectee);

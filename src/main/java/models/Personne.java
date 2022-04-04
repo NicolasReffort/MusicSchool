@@ -1,5 +1,8 @@
 package models;
 
+import java.sql.Array;
+import java.util.ArrayList;
+
 import javax.annotation.Nonnull;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
@@ -25,7 +28,7 @@ public class Personne {
   @Nonnull 
   @Size (min = 2, message = "Le prénom est trop court") 
   private String prenom; 
-
+  
   public final Integer getIdentifiant() {
     return identifiant;
   }
@@ -46,6 +49,7 @@ public class Personne {
   public final void setPrenom(final String prenomASetter) {
     this.prenom = prenomASetter;
   }
+  
   //CONSTRUCTEUR VIDE 
   public Personne() { };
 

@@ -13,26 +13,28 @@
   PAGE LISTE
  </H1>
 
- <div class="row">  
+    <div class="row">  
 
-  <select class="col-8 form-select" aria-label="Default select example">
-   <option selected> 
-    <strong> Les membres sont :</strong> 
-   </option>
+        <div class="col-5">
+        <select name="idFromSelect" class="col-8 form-select" aria-label="Default select example">
+            <option selected> 
+            <strong> Les membres sont :</strong> 
+            </option>
 
-   <c:forEach items="${membres}" var="membre" >   
-   
-    <c:set var="age" value="${membre.identifiant}" scope="page" />
-
-    <option> 
-     ${empty membre.nom ? " (Le nom est vide pour ce mec)" : membre.nom }
-     ${empty membre.prenom ? " (Le prénom est vide pour ce mec)" : membre.prenom }
-    </option>      
-     
-   </c:forEach> 
-  </select>
+            <c:forEach items="${membres}" var="membre" >   
+            
+                <option value="${membre.identifiant}" > 
+                    ${empty membre.identifiant ? " (L'identifiant est vide)" : membre.identifiant }
+                    ${empty membre.nom ? " (Le nom est vide)" : membre.nom }
+                    ${empty membre.prenom ? " (Le prénom est vide)" : membre.prenom }
+                </option>  
+            
+            </c:forEach>     
+            
+        </select>
+        </div>
   
- </div> 
+    </div> 
  
  <br>
 

@@ -6,7 +6,9 @@ package servlet;
  * and open the template in the editor.
  */
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -25,7 +27,8 @@ import controllers.SupprimerAdherents;
 /**
  *
  * @author Nicolas
- *     le arobase signifie "Salut c'est moi la Servlet qu'on surnomme Accueil
+ *  le arobaseWebServlet signifie
+ *  "Salut c'est moi la Servlet qu'on surnomme Accueil"
  */
 
 @WebServlet(urlPatterns = { "/accueil" })
@@ -34,14 +37,16 @@ public class Servlet extends HttpServlet {
   private String cheminJSP = "WEB-INF/JSP/";
   private Map<String, ICommand> maps = new HashMap<String, ICommand>();
 
-  // CONSITUTION DU CARNET D ADRESSE DE L'OPERATRICE
+  // CONSITUTION DU CARNET D ADRESSE
   public final void init() {
+    
     maps.put(null, new PageAccueilController());
     maps.put("accueil", new PageAccueilController());
     maps.put("lister", new ListerAdherents());
     maps.put("creer", new CreerAdherents());
     maps.put("modifier", new ModifierAdherents());
     maps.put("supprimer", new SupprimerAdherents());
+
   }
 
   /** 
@@ -63,7 +68,7 @@ public class Servlet extends HttpServlet {
     processRequest(request, response);
   }
 
-  // CONSIGNE POUR L'OPERATRICE
+  // CONSIGNES
   protected final void processRequest(final HttpServletRequest request,
   final HttpServletResponse response)
       throws ServletException, IOException {
@@ -83,4 +88,5 @@ public class Servlet extends HttpServlet {
       request.getRequestDispatcher(cheminJSP + "erreur.jsp").forward(request, response);
     }
   }  
+
 }

@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.Personne;
-import models.forms.FormulaireCreation;
 import models.forms.FormulaireModification;
 import outils.Verificateur;
 
@@ -24,27 +23,27 @@ public final class ModifierAdherents implements ICommand {
     Logger logger = Logger.getLogger(CreerAdherents.class.getName());
 
     Integer idToModifier = 0;
-    ArrayList<Personne> membres = new ArrayList<Personne>(); 
-    
-    String nomModifie; 
+    ArrayList<Personne> membres = new ArrayList<Personne>();
+
+    String nomModifie;
     String prenomModifie;
     Personne membreModifie = new Personne();
 
     List<String> erreurs = new ArrayList<String>();
     Boolean erreurDetectee = false;
-    Boolean unePersonneChoisieDansLeSelect = false; 
+    Boolean unePersonneChoisieDansLeSelect = false;
     /*si la requete contient le savoirSiSelectSelectionne, c'est que
      l'utilisateur a sélectionné une personne à modifier dans le select*/
 
-    Boolean unePersonneModifiee = false; 
+    Boolean unePersonneModifiee = false;
     //si la requete contient le savoirSiPersonneEstModifie c'est que
     //l'utilisateur a modifié la personne et renvoyé des données
-   
-    Boolean succesModification = false; 
+
+    Boolean succesModification = false;
     //si la modification en Bdd a fonctionné
 
     if (membres.isEmpty()) {
-      
+
       // recupérer la collection :
       Personne leonard = new Personne("De Vinci", "Léonard", 50);
       Personne pablo = new Personne("Picasso", "Pablo", 60);
@@ -54,25 +53,25 @@ public final class ModifierAdherents implements ICommand {
       membres.add(david);
     }
 
-    final String savoirSiSelectSelectionne = "idFromSelect"; 
-    final String savoirSiPersonneEstModifie = "identifiant"; 
+    final String savoirSiSelectSelectionne = "idFromSelect";
+    final String savoirSiPersonneEstModifie = "identifiant";
 
-    if (request.getParameterMap().containsKey(savoirSiSelectSelectionne)) {  
+    if (request.getParameterMap().containsKey(savoirSiSelectSelectionne)) {
       unePersonneChoisieDansLeSelect = true;
     }
-        
+
     if ((request.getParameterMap().containsKey(savoirSiPersonneEstModifie))) {
-      unePersonneModifiee = true; 
-    } 
+      unePersonneModifiee = true;
+    }
 
     if (unePersonneChoisieDansLeSelect && !unePersonneModifiee) {
       //on récupère son id
-      try {    
+      try {
         idToModifier =
          Integer.parseInt(request.getParameter(savoirSiSelectSelectionne));
       } catch (NumberFormatException nfe) {
         logger.log(Level.INFO, "Id non parsable");
- 
+
       }
 
       // on le relie l'id la personne,
@@ -84,8 +83,8 @@ public final class ModifierAdherents implements ICommand {
       }
     }
 
-    if (unePersonneModifiee) {   
-      String retourForm;   
+    if (unePersonneModifiee) {
+      String retourForm;
 
       // on lit ce qu'on vient de recevoir comme nouveaux attribubts
       nomModifie = request.getParameter("nom");
@@ -97,28 +96,28 @@ public final class ModifierAdherents implements ICommand {
         logger.log(Level.INFO, "Id non parsable");
 
       }
-  
-      
+
+
       // on relie l'id à la personne
       for (Personne membre : membres) {
         if ((membre.getIdentifiant()) == idToModifier) {
-          // on créé une personne pour aller passer les tests BeansValidator    
+          // on créé une personne pour aller passer les tests BeansValidator
         membreModifie.setNom(nomModifie);
         membreModifie.setIdentifiant(idToModifier);
         membreModifie.setPrenom(prenomModifie);
         }
       }
       // on teste les valeurs reçues avec BeanValidator
-      erreurs = Verificateur.areMyAttributesOk(membreModifie);    
-         
+      erreurs = Verificateur.areMyAttributesOk(membreModifie);
+
       // si pas d'erreurs au niveau du BeanValidator
       if (erreurs.isEmpty()) {
 
         // on teste les valeurs reçues avec la classe forms adaptée
         FormulaireModification monFormulaireModification =
-         new FormulaireModification();        
+         new FormulaireModification();
         monFormulaireModification.areTwoFieldsEgals(request);
-        retourForm = monFormulaireModification.getMessage();         
+        retourForm = monFormulaireModification.getMessage();
 
         // si le formulaire n'est pas validé on récupère le message d'erreur
         if (!retourForm.trim().isEmpty()) {
@@ -128,31 +127,31 @@ public final class ModifierAdherents implements ICommand {
         // si pas erreurs, on renvoie avec succès
           succesModification = true;
         }
-                
+
       } else {
-        erreurDetectee = true;        
+        erreurDetectee = true;
         //on renvoit le membre que l'user va essayer de modifier
         for (Personne membre : membres) {
-          
+
           if ((membre.getIdentifiant()) == idToModifier) {
             request.setAttribute("membreToModifier", membre);
-            
+
           }
         }
 
-      }      
-    }   
-    
-    //dans tous les cas on renvoit:     
+      }
+    }
+
+    //dans tous les cas on renvoit:
     // on renvoit le membre saisi précédemment(attention : avec ses erreurs)
-    request.setAttribute("membreModifie", membreModifie);        
+    request.setAttribute("membreModifie", membreModifie);
     request.setAttribute(
       "unePersonneChoisieDansLeSelect", unePersonneChoisieDansLeSelect);
     request.setAttribute("erreurDetectee", erreurDetectee);
     request.setAttribute("erreurs", erreurs);
-    request.setAttribute("succesModification", succesModification);    
+    request.setAttribute("succesModification", succesModification);
     request.setAttribute("unePersonneModifiee", unePersonneModifiee);
-    request.setAttribute("membres", membres);    
+    request.setAttribute("membres", membres);
     return "save.jsp";
   }
 }

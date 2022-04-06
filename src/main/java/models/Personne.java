@@ -1,11 +1,22 @@
 package models;
 
-import java.sql.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
+
+import java.util.Set;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.ValidationException;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import exceptions.MonException;
 
@@ -56,4 +67,32 @@ public class Personne {
     this.prenom = prenomASetter;
     this.identifiant = identifiantASetter;
   }
+
+  /** Beanvalide la personne.
+   * @return liste des messages d'erreur (vide si pas d'erreur)
+   */
+  public List<String> areMyAttributesOk(Personne this) {
+
+    Set<ConstraintViolation<Personne>> violations = null;
+    Logger logger = Logger.getLogger(Personne.class.getName());
+    List<String> listesErreurs = new ArrayList<>();
+
+    try {
+      ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+      Validator validator = factory.getValidator();
+      violations = validator.validate(this);
+    } catch (ValidationException ve) {
+      logger.log(Level.INFO, ve.getMessage());
+    } catch (RuntimeException rte) {
+      logger.log(Level.INFO, rte.getMessage());
+    }
+
+    if (!violations.isEmpty()) {
+      for (ConstraintViolation<Personne> violation : violations) {
+        listesErreurs.add(violation.getMessage());
+      }
+    }
+    return listesErreurs;
+  }
+
 }

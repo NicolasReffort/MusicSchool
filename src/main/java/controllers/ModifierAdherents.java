@@ -7,7 +7,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.Personne;
 import models.forms.FormulaireModification;
-import outils.Verificateur;
 
 public final class ModifierAdherents implements ICommand {
 
@@ -105,7 +104,7 @@ public final class ModifierAdherents implements ICommand {
         }
       }
       // on teste les valeurs reçues avec BeanValidator
-      erreurs = Verificateur.areMyAttributesOk(membreModifie);
+      erreurs = membreModifie.areMyAttributesOk();
 
       // si pas d'erreurs au niveau du BeanValidator
       if (erreurs.isEmpty()) {

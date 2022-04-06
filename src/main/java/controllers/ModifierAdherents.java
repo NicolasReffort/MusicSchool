@@ -71,7 +71,6 @@ public final class ModifierAdherents implements ICommand {
          Integer.parseInt(request.getParameter(savoirSiSelectSelectionne));
       } catch (NumberFormatException nfe) {
         logger.log(Level.INFO, "Id non parsable");
-
       }
 
       // on le relie l'id la personne,
@@ -86,7 +85,7 @@ public final class ModifierAdherents implements ICommand {
     if (unePersonneModifiee) {
       String retourForm;
 
-      // on lit ce qu'on vient de recevoir comme nouveaux attribubts
+      // on lit ce qu'on vient de recevoir comme nouveaux attributs
       nomModifie = request.getParameter("nom");
       prenomModifie = request.getParameter("prenom");
       try {
@@ -94,9 +93,7 @@ public final class ModifierAdherents implements ICommand {
          Integer.parseInt(request.getParameter(savoirSiPersonneEstModifie));
       } catch (NumberFormatException nfe) {
         logger.log(Level.INFO, "Id non parsable");
-
       }
-
 
       // on relie l'id à la personne
       for (Personne membre : membres) {
@@ -135,7 +132,6 @@ public final class ModifierAdherents implements ICommand {
 
           if ((membre.getIdentifiant()) == idToModifier) {
             request.setAttribute("membreToModifier", membre);
-
           }
         }
 

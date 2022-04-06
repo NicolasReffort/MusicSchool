@@ -13,10 +13,7 @@ import exceptions.MonException;
  */
 public class Personne {
 
-  private final String MSG_CHAMPS_IDENTIQUES =
-   "Les champs ne peuvent pas avoir la même valeur"; 
- 
-  @Nonnull
+   @Nonnull
   @Min(value = 1, message = "l'identifiant ne peut pas être inférieur à 1")
   private Integer identifiant;
 
@@ -25,10 +22,10 @@ public class Personne {
    message = "Le nom doit faire entre 2 et 30 caractères")
   private String nom;
 
-  @Nonnull 
-  @Size (min = 2, message = "Le prénom est trop court") 
-  private String prenom; 
-  
+  @Nonnull
+  @Size (min = 2, message = "Le prénom est trop court")
+  private String prenom;
+
   public final Integer getIdentifiant() {
     return identifiant;
   }
@@ -49,14 +46,14 @@ public class Personne {
   public final void setPrenom(final String prenomASetter) {
     this.prenom = prenomASetter;
   }
-  
-  //CONSTRUCTEUR VIDE 
+
+  //CONSTRUCTEUR VIDE
   public Personne() { };
 
   public Personne(final String nomASetter,
    final String prenomASetter, final Integer identifiantASetter) {
     this.nom = nomASetter;
     this.prenom = prenomASetter;
-    this.identifiant = identifiantASetter; 
-  }  
+    this.identifiant = identifiantASetter;
+  }
 }

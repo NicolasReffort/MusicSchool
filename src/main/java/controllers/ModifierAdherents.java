@@ -1,14 +1,18 @@
 package controllers;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import models.Personne;
 import models.forms.FormulaireModification;
 
 public final class ModifierAdherents implements ICommand {
+
+  private Logger logger = Logger.getLogger(ModifierAdherents.class.getName());
 
   /**
    * modifie un adhérent.
@@ -19,7 +23,7 @@ public final class ModifierAdherents implements ICommand {
   public String execute(final HttpServletRequest request,
    final HttpServletResponse response) throws Exception {
 
-    Logger logger = Logger.getLogger(CreerAdherents.class.getName());
+    init(request, response);
 
     Integer idToModifier = 0;
     ArrayList<Personne> membres = new ArrayList<Personne>();
@@ -41,7 +45,7 @@ public final class ModifierAdherents implements ICommand {
     Boolean succesModification = false;
     //si la modification en Bdd a fonctionné
 
-    if (membres.isEmpty()) {
+    if (Boolean.TRUE.equals(membres.isEmpty())) {
 
       // recupérer la collection :
       Personne leonard = new Personne("De Vinci", "Léonard", 50);
@@ -63,7 +67,8 @@ public final class ModifierAdherents implements ICommand {
       unePersonneModifiee = true;
     }
 
-    if (unePersonneChoisieDansLeSelect && !unePersonneModifiee) {
+    if (Boolean.TRUE.equals(unePersonneChoisieDansLeSelect)
+     && Boolean.FALSE.equals(unePersonneModifiee)) {
       //on récupère son id
       try {
         idToModifier =
@@ -75,7 +80,7 @@ public final class ModifierAdherents implements ICommand {
       // on le relie l'id la personne,
       // personne qu'on renvoit à la JSP pour modification
       for (Personne membre : membres) {
-        if ((membre.getIdentifiant()) == idToModifier) {
+        if ((membre.getIdentifiant().equals(idToModifier))) {
           request.setAttribute("membreToModifier", membre);
         }
       }
@@ -96,7 +101,7 @@ public final class ModifierAdherents implements ICommand {
 
       // on relie l'id à la personne
       for (Personne membre : membres) {
-        if ((membre.getIdentifiant()) == idToModifier) {
+        if ((membre.getIdentifiant()).equals(idToModifier)) {
           // on créé une personne pour aller passer les tests BeansValidator
         membreModifie.setNom(nomModifie);
         membreModifie.setIdentifiant(idToModifier);
@@ -129,7 +134,7 @@ public final class ModifierAdherents implements ICommand {
         //on renvoit le membre que l'user va essayer de modifier
         for (Personne membre : membres) {
 
-          if ((membre.getIdentifiant()) == idToModifier) {
+          if ((membre.getIdentifiant()).equals(idToModifier)) {
             request.setAttribute("membreToModifier", membre);
           }
         }
@@ -147,6 +152,8 @@ public final class ModifierAdherents implements ICommand {
     request.setAttribute("succesModification", succesModification);
     request.setAttribute("unePersonneModifiee", unePersonneModifiee);
     request.setAttribute("membres", membres);
+
     return "save.jsp";
   }
+
 }

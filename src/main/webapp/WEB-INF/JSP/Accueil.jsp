@@ -16,12 +16,24 @@
  BONJOUR
  </div>
 
+  <div class="text-center mt-5">
+    <c:if test="${messageAccueil}">
+      ${messageAccueil}
+    </c:if>
+
+  </div>
+
+
+
  <div class="row">
-  J'ai dit : 
-  Bonjour ! 
+  J'ai dit :
+  Bonjour !
  </div>
  <br>
- 
+   <p>
+      <c:out value="${messageAccueil}" />
+    </p>
+
  <jsp:include page="footer.jsp" />
 
 </body>

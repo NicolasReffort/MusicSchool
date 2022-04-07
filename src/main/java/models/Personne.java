@@ -24,7 +24,6 @@ import exceptions.MonException;
  */
 public class Personne {
 
-   @Nonnull
   @Min(value = 1, message = "l'identifiant ne peut pas être inférieur à 1")
   private Integer identifiant;
 
@@ -73,25 +72,25 @@ public class Personne {
    */
   public List<String> areMyAttributesOk(Personne this) {
 
-    Set<ConstraintViolation<Personne>> violations = null;
     Logger logger = Logger.getLogger(Personne.class.getName());
     List<String> listesErreurs = new ArrayList<>();
 
     try {
+      Set<ConstraintViolation<Personne>> violations;
       ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
       Validator validator = factory.getValidator();
       violations = validator.validate(this);
+      if (!violations.isEmpty()) {
+        for (ConstraintViolation<Personne> violation : violations) {
+          listesErreurs.add(violation.getMessage());
+        }
+      }
     } catch (ValidationException ve) {
       logger.log(Level.INFO, ve.getMessage());
     } catch (RuntimeException rte) {
       logger.log(Level.INFO, rte.getMessage());
     }
 
-    if (!violations.isEmpty()) {
-      for (ConstraintViolation<Personne> violation : violations) {
-        listesErreurs.add(violation.getMessage());
-      }
-    }
     return listesErreurs;
   }
 

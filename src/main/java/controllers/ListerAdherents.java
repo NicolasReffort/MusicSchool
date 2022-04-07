@@ -1,5 +1,6 @@
 package controllers;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,13 +11,15 @@ public class ListerAdherents implements ICommand {
 
   /**
    * liste les adhérents.
-   * 
+   *
    * @param request  une requête html
    * @param response une réponse html
    * @return une adresse de page jsp
    */
   public String execute(final HttpServletRequest request,
    final HttpServletResponse response) throws Exception {
+
+    init(request, response);
 
     ArrayList<Personne> membres = new ArrayList<Personne>();
 
@@ -27,9 +30,10 @@ public class ListerAdherents implements ICommand {
     membres.add(leonard);
     membres.add(pablo);
     membres.add(david);
-
     request.setAttribute("membres", membres);
 
     return "lister.jsp";
   }
+
+
 }

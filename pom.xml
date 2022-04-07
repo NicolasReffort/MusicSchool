@@ -26,7 +26,7 @@
    <version>4.11</version>
    <scope>test</scope>
   </dependency>
-  
+
 <!-- JUNIT JUPITER -->
   <dependency>
    <groupId>org.junit.jupiter</groupId>
@@ -55,13 +55,13 @@
 		<version>4.0.1</version>
 		<scope>provided</scope>
 	</dependency>
-	
+
 	<!-- CHECKSTYLE -->
 	<dependency>
 		<groupId>org.apache.maven.plugins</groupId>
 		<artifactId>maven-checkstyle-plugin</artifactId>
 		<version>3.1.2</version>
-	</dependency> 
+	</dependency>
 
   <!-- javax.validation/validation-api -->
   <dependency>
@@ -69,7 +69,7 @@
    <artifactId>validation-api</artifactId>
    <version>2.0.1.Final</version>
   </dependency>
- 
+
   <dependency>
    <groupId>org.hibernate</groupId>
    <artifactId>hibernate-validator</artifactId>
@@ -123,7 +123,7 @@
      <artifactId>maven-war-plugin</artifactId>
      <version>3.2.2</version>
     </plugin>
-		
+
     <plugin>
      <artifactId>maven-install-plugin</artifactId>
      <version>2.5.2</version>
@@ -131,7 +131,7 @@
     <plugin>
      <artifactId>maven-deploy-plugin</artifactId>
      <version>2.8.2</version>
-    </plugin>		
+    </plugin>
 
 		<plugin>
      <groupId>org.codehaus.cargo</groupId>
@@ -145,21 +145,19 @@
       <configuration>
        <type>runtime</type>
        <properties>
-        <cargo.tomcat.context.reloadable>true</cargo.tomcat.context.reloadable>	
-				
+        <cargo.tomcat.context.reloadable>true</cargo.tomcat.context.reloadable>
+
 				<cargo.remote.username>${catalina.admin.username}</cargo.remote.username>
 				<cargo.remote.password>${catalina.admin.password}</cargo.remote.password>
 				<cargo.tomcat.manager.url>${catalina.manager.url</cargo.tomcat.manager.url>
 
-        <!-- <cargo.remote.username>tomcat</cargo.remote.username> -->
-        <!-- <cargo.remote.password>tomcat</cargo.remote.password> -->
         <cargo.servlet.port>9080</cargo.servlet.port>
-				
+
        </properties>
       </configuration>
      </configuration>
     </plugin>
-		
+
 		<!-- CHECKSTYLE -->
 		<plugin>
 			<groupId>org.apache.maven.plugins</groupId>
@@ -173,7 +171,7 @@
 			</dependency>
 			</dependencies>
 		</plugin>
-		
+
    </plugins>
   </pluginManagement>
  </build>

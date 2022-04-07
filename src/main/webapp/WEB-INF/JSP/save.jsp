@@ -2,6 +2,7 @@
 <html lang="fr">
 <head>
  <jsp:include page="head.jsp" />
+  <title>Document</title>
 </head>
 <body>
  <jsp:include page="navbar.jsp" />

@@ -7,13 +7,15 @@ import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import exceptions.MonException;
 import models.Personne;
 import models.forms.FormulaireCreation;
 
 
 public class CreerAdherents implements ICommand {
+
+  private Logger logger =
+  Logger.getLogger(CreerAdherents.class.getName());
 
   /** cree un adhérent.
    * @param request une requête html
@@ -23,9 +25,9 @@ public class CreerAdherents implements ICommand {
   public String execute(final HttpServletRequest request,
   final HttpServletResponse response)
    throws Exception {
-     Logger logger = Logger.getLogger(CreerAdherents.class.getName());
-     String nomCreation;
 
+    init(request, response);
+    String nomCreation;
     String prenomCreation;
     ArrayList<Personne> membres = new ArrayList<Personne>();
     final String savoirSiCreationSouhaitee = "nom";
@@ -99,4 +101,5 @@ public class CreerAdherents implements ICommand {
     return "save.jsp";
 
   }
+
 }

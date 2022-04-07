@@ -8,12 +8,15 @@ package servlet;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.hibernate.validator.internal.util.logging.LoggerFactory;
 
 import controllers.CreerAdherents;
 import controllers.ICommand;
@@ -32,38 +35,49 @@ import controllers.SupprimerAdherents;
 @WebServlet(urlPatterns = { "/accueil" })
 public class Servlet extends HttpServlet {
 
-  private String cheminJSP = "WEB-INF/JSP/";
-  private Map<String, ICommand> maps = new HashMap<String, ICommand>();
+  // private Logger logger = Logger.getLogger(Servlet.class.getName());
+  private static final String CHEMINJSP = "WEB-INF/JSP/";
+  private static final Map<String, ICommand> MAPS =
+   new HashMap<>();
 
-  // CONSITUTION DU CARNET D ADRESSE
-  public final void init() {
-    
-    maps.put(null, new PageAccueilController());
-    maps.put("accueil", new PageAccueilController());
-    maps.put("lister", new ListerAdherents());
-    maps.put("creer", new CreerAdherents());
-    maps.put("modifier", new ModifierAdherents());
-    maps.put("supprimer", new SupprimerAdherents());
+   // CONSITUTION DU CARNET D ADRESSE
+   @Override
+   public final void init() {
 
-  }
+     MAPS.put(null, new PageAccueilController());
+     MAPS.put("accueil", new PageAccueilController());
+     MAPS.put("lister", new ListerAdherents());
+     MAPS.put("creer", new CreerAdherents());
+     MAPS.put("modifier", new ModifierAdherents());
+     MAPS.put("supprimer", new SupprimerAdherents());
 
-  /** 
-   */
-  @Override
+    }
+
+    /**
+     */
+    @Override
   protected void doGet(final HttpServletRequest request,
   final HttpServletResponse response)
-      throws ServletException, IOException {
-    processRequest(request, response);
-  }
+  throws ServletException, IOException {
+        try {
+          processRequest(request, response);
+        } catch (ServletException | IOException seio) {
+          String messageErreur = "impoddible de procéder au DOPOST";
+        }
+      }
 
   /**
    */
   @Override
   protected void doPost(final HttpServletRequest request,
-      final HttpServletResponse response)
-      throws ServletException, IOException {
- 
-    processRequest(request, response);
+  final HttpServletResponse response)
+  throws ServletException, IOException {
+
+    try {
+      processRequest(request, response);
+    } catch (ServletException | IOException seio) {
+      String messageErreur = "impoddible de procéder au doPOST";
+    }
   }
 
   // CONSIGNES
@@ -71,20 +85,21 @@ public class Servlet extends HttpServlet {
   final HttpServletResponse response)
       throws ServletException, IOException {
 
-    String action; 
+    String action;
     try {
       action = request.getParameter("action");
       // on récupère l’objet de la classe du contrôleur voulu
-      ICommand controller =
-       (ICommand) maps.get(action); 
+      ICommand controller = MAPS.get(action);
       String urlSuite = controller.execute(request, response);
-      request.getRequestDispatcher(cheminJSP + urlSuite).forward(request, response);
+      request.getRequestDispatcher(
+        CHEMINJSP + urlSuite).forward(request, response);
 
     } catch (Exception e) {
       e.printStackTrace();
       log(e.getMessage() + "Erreur inconnue lors de la requête");
-      request.getRequestDispatcher(cheminJSP + "erreur.jsp").forward(request, response);
+      request.getRequestDispatcher(
+        CHEMINJSP + "erreur.jsp").forward(request, response);
     }
-  }  
+  }
 
 }

@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import models.Personne;
 
@@ -22,6 +23,7 @@ public class SupprimerAdherents implements ICommand {
   final HttpServletResponse response)
   throws Exception {
 
+    init(request, response);
     ArrayList<Personne> membres = new ArrayList<Personne>();
     List<String> erreurs = new ArrayList<String>();
     Boolean erreurDetectee = false;
@@ -61,7 +63,7 @@ public class SupprimerAdherents implements ICommand {
            idToDelete = Integer.parseInt(idConfirmeString);
           // on supprime le membre
           for (Personne membre : membres) {
-            if (membre.getIdentifiant() == idToDelete) {
+            if (membre.getIdentifiant().equals(idToDelete)) {
               membreToDelete = membre;
             }
           }
@@ -76,7 +78,7 @@ public class SupprimerAdherents implements ICommand {
           idFromSelect = Integer.parseInt(idFromSelectString);
           //on renvoit le membre pour confirmation
           for (Personne membre : membres) {
-          if ((membre.getIdentifiant()) == idFromSelect) {
+          if ((membre.getIdentifiant()).equals(idFromSelect)) {
             request.setAttribute("membreToDelete", membre);
             }
           }
@@ -104,4 +106,6 @@ public class SupprimerAdherents implements ICommand {
 
   return "supprimer.jsp";
   }
+
+
 }

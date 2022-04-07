@@ -26,6 +26,10 @@
         Erreur détecté : <c:out value="${erreurDetectee}" /> <br>
         membreToDelete.identifiant : <c:out value="${membreToDelete.identifiant}" /> <br>
         idToDelete : <c:out value="${idToDelete}" /> <br>
+        <p>
+          <c:out value="${messageAccueil}" />
+        </p>
+
 
         <c:if test="${erreurDetectee == 'true'}">
           <div class="alert alert-warning" role="alert">
@@ -54,7 +58,7 @@
             <div class="display-5 text-primary" style="--bs-text-opacity: .15">
               BEEN ERASED
             </div>
-            <img src="assets/image/erasingOk.jpg" >
+            <img alt="Le film l'EFFACEUR" src="assets/image/erasingOk.jpg" >
             <br>
 
           </c:when>

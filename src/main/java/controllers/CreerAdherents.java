@@ -5,8 +5,12 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.http.HttpException;
+
 import exceptions.MonException;
 import models.Personne;
 import models.forms.FormulaireCreation;
@@ -17,6 +21,8 @@ public class CreerAdherents implements ICommand {
   private Logger logger =
   Logger.getLogger(CreerAdherents.class.getName());
 
+
+
   /** cree un adhérent.
    * @param request une requête html
    * @param response une réponse html
@@ -24,9 +30,22 @@ public class CreerAdherents implements ICommand {
    */
   public String execute(final HttpServletRequest request,
   final HttpServletResponse response)
-   throws Exception {
+   throws HttpException {
 
     init(request, response);
+
+    //instanciation des cookies
+    Cookie[] cookies = request.getCookies();
+
+    if (getCookie(request, "prenom") == null) {
+      response.addCookie(new Cookie("prenom", "vide"));
+    }
+    
+    if (getCookie(request, "nom") == null) {
+      response.addCookie(new Cookie("nom", "vide"));
+    }
+
+
     String nomCreation;
     String prenomCreation;
     ArrayList<Personne> membres = new ArrayList<Personne>();
@@ -71,6 +90,21 @@ public class CreerAdherents implements ICommand {
         // si toujours pas d'erreurs, on essaie de setter
           try {
             membres.add(personneACreer);
+            // on stocke ces infos dans un cookie
+            Cookie cookieNom = getCookie(request, "nom");
+            if (cookieNom != null) {
+              cookieNom.setValue(nomCreation);
+              response.addCookie(cookieNom);
+              request.setAttribute("nouveauNom", cookieNom.getValue());
+            }
+            Cookie cookiePrenom = getCookie(request, "prenom");
+            if (cookiePrenom != null) {
+              cookiePrenom.setValue(prenomCreation);
+              response.addCookie(cookiePrenom);
+              request.setAttribute("nouveauPrenom", cookiePrenom.getValue());
+            }
+
+
             creation = "done";
           } catch (NumberFormatException nfe) {
             // si pb on renvoie la personne en erreur, avec un flag d'erreur
@@ -97,7 +131,6 @@ public class CreerAdherents implements ICommand {
     request.setAttribute("erreurs", erreurs);
     //... la personne que l'useur veut créer (même avec des erreurs)
     request.setAttribute("personneACreer", personneACreer);
-
     return "save.jsp";
 
   }

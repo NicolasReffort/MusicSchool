@@ -9,13 +9,19 @@
 
  <jsp:include page="navbar.jsp" />
 
- <H1>
-  PAGE LISTE
- </H1>
 
-    <div class="row">
-      <div class="col-5">
-        <div class="optionbox">
+  <div class="container">
+    <jsp:include page="compteurPage.jsp"/>
+
+    <div class="text-center mt-5">
+      <H1>
+        PAGE LISTE
+      </H1>
+    </div>
+
+  </div>
+
+  <div class="optionbox">
 
           <select name="idFromSelect" class="col-8 form-select" aria-label="Default select example">
               <option selected>
@@ -32,9 +38,7 @@
               </c:forEach>
 
           </select>
-        </div>
-      </div>
-    </div>
+  </div>
 
  <br>
 

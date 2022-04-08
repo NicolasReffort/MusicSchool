@@ -1,6 +1,16 @@
+*{
+  background-image: url('https: //images6.alphacoders.com/326/thumbbig-326020.webp');
+  background-size: cover;
+}
+
 body {
   margin: 0;
   padding: 0;
-  background: #f7f7f7
+  /* background: #f7f7f7; */
+  background-image: url('assets/image/background.jpg');
+  background-size: cover;
 }
+
+
+
 

@@ -2,6 +2,10 @@ package controllers;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.http.HttpException;
+
+import exceptions.MonException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -21,7 +25,7 @@ public final class ModifierAdherents implements ICommand {
    * @return une adresse de page jsp
    */
   public String execute(final HttpServletRequest request,
-   final HttpServletResponse response) throws Exception {
+   final HttpServletResponse response) throws HttpException {
 
     init(request, response);
 
@@ -103,9 +107,13 @@ public final class ModifierAdherents implements ICommand {
       for (Personne membre : membres) {
         if ((membre.getIdentifiant()).equals(idToModifier)) {
           // on créé une personne pour aller passer les tests BeansValidator
-        membreModifie.setNom(nomModifie);
-        membreModifie.setIdentifiant(idToModifier);
-        membreModifie.setPrenom(prenomModifie);
+        try {
+          membreModifie.setNom(nomModifie);
+          membreModifie.setIdentifiant(idToModifier);
+          membreModifie.setPrenom(prenomModifie);
+        } catch (MonException me) {
+          erreurs.add(me.getMessage());
+        }
         }
       }
       // on teste les valeurs reçues avec BeanValidator

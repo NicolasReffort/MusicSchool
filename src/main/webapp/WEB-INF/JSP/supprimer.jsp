@@ -16,6 +16,8 @@
 
   <div class="container">
 
+    <jsp:include page="compteurPage.jsp"/>
+
     <div class="text-center mt-5">
 
         <H1>

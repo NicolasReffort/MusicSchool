@@ -2,11 +2,15 @@ package controllers;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.apache.http.HttpException;
+
 import java.util.logging.Logger;
 
 public class PageAccueilController implements ICommand {
 
-  Logger logger = Logger.getLogger(PageAccueilController.class.getName());
+  private Logger logger =
+   Logger.getLogger(PageAccueilController.class.getName());
 
   /**
    * liste les adhérents.
@@ -16,22 +20,22 @@ public class PageAccueilController implements ICommand {
    * @return une adresse de page jsp
    */
   public String execute(final HttpServletRequest request,
-  final HttpServletResponse response) throws Exception {
+  final HttpServletResponse response) throws HttpException {
 
-    init(request, response);
+    //init(request, response);
     // variables de session
-    HttpSession session = request.getSession();
-    String nomUser = "Francis Holmes";
-    session.setAttribute("nomUser", "François");
-    String messageAccueil = "Je vous salue   ";
+    // HttpSession session = request.getSession();
+    // String nomUser = "Francis Holmes";
+    // session.setAttribute("nomUser", "François");
+    // String messageAccueil = "Je vous salue   ";
 
-    if (session.getAttribute("nomUser") != null) {
-      session.setAttribute("messageAccueil", messageAccueil + nomUser);
-    }
+    // if (session.getAttribute("nomUser") != null) {
+    //   session.setAttribute("messageAccueil", messageAccueil + nomUser);
+    // }
 
     return "accueil.jsp";
   }
 
-  
+
 
 }

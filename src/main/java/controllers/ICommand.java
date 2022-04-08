@@ -1,7 +1,8 @@
-package controllers ;
+package controllers;
 
 import java.util.logging.Logger;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -23,9 +24,12 @@ public interface ICommand {
     final Logger logger = Logger.getLogger(this.getClass().getName());
     HttpSession session = request.getSession();
     String compteurPage = "compteurPage";
+
     if (session.getAttribute(compteurPage) == null) {
-      session.setAttribute(compteurPage, 0);
-    } else {
+      session.setAttribute(compteurPage, 1);
+
+    } else { // si notre compteur existe déjà, on l'incrémente
+
       try {
         Object compteurPageAttribut = session.getAttribute(compteurPage);
         Integer pageIncrementee = ((Integer) compteurPageAttribut) + 1;
@@ -40,7 +44,20 @@ public interface ICommand {
             + "impossible de récupérer le compteur : ");
       }
     }
+  }
+
+  default  Cookie getCookie(HttpServletRequest request, String name) {
+
+    if (request.getCookies() != null) {
+      for (Cookie cookie : request.getCookies()) {
+        if (cookie.getName().equals(name)) {
+          return cookie;
+        }
       }
+    }
+    return null;
+  }
+
 
   /**
    *

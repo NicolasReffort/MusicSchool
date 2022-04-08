@@ -17,13 +17,9 @@
  </div>
 
   <div class="text-center mt-5">
-    <c:if test="${messageAccueil}">
-      ${messageAccueil}
-    </c:if>
+    <jsp:include page="compteurPage.jsp"/>
 
   </div>
-
-
 
  <div class="row">
   J'ai dit :
@@ -31,7 +27,6 @@
  </div>
  <br>
    <p>
-      <c:out value="${messageAccueil}" />
     </p>
 
  <jsp:include page="footer.jsp" />

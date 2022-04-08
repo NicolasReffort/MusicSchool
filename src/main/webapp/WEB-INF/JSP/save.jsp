@@ -11,6 +11,8 @@
   <!-- Page content-->
   <div class="container">
 
+    <jsp:include page="compteurPage.jsp"/>
+
     <div class="text-center mt-5">
 
       <p class="lead">
@@ -112,7 +114,6 @@
           </c:forEach>
           </div>
         </c:if>
-
 
         <form method="post" action="${action}">
           <label for="nom">

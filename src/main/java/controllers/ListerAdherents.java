@@ -1,9 +1,9 @@
 package controllers;
 import java.util.ArrayList;
-import java.util.logging.Logger;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.http.HttpException;
 
 import models.Personne;
 
@@ -17,7 +17,7 @@ public class ListerAdherents implements ICommand {
    * @return une adresse de page jsp
    */
   public String execute(final HttpServletRequest request,
-   final HttpServletResponse response) throws Exception {
+   final HttpServletResponse response) throws HttpException {
 
     init(request, response);
 

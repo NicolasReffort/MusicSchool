@@ -5,7 +5,8 @@ import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
+import org.apache.http.HttpException;
 
 import models.Personne;
 
@@ -21,7 +22,7 @@ public class SupprimerAdherents implements ICommand {
    */
   public String execute(final HttpServletRequest request,
   final HttpServletResponse response)
-  throws Exception {
+  throws HttpException {
 
     init(request, response);
     ArrayList<Personne> membres = new ArrayList<Personne>();

@@ -44,6 +44,28 @@ public interface ICommand {
             + "impossible de récupérer le compteur : ");
       }
     }
+
+  }
+
+  default void runCookies(HttpServletRequest request,
+   HttpServletResponse response) {
+
+    // instanciation des cookies
+    String cookiePrenomUser = "prenomUser";
+    String cookieNomUser = "nomUser";
+
+    // si les cookies suivants sont nuls on les initialise
+    if (getCookie(request, cookiePrenomUser) == null) {
+      Cookie cookie = new Cookie(cookiePrenomUser, "vide");
+      cookie.setMaxAge(3600);
+      response.addCookie(cookie);
+    }
+    if (getCookie(request, cookieNomUser) == null) {
+      Cookie cookie = new Cookie(cookieNomUser, "vide");
+      cookie.setMaxAge(3600);
+      response.addCookie(cookie);
+    }
+
   }
 
   default  Cookie getCookie(HttpServletRequest request, String name) {
@@ -59,6 +81,8 @@ public interface ICommand {
   }
 
 
+
+
   /**
    *
    * @param request
@@ -69,5 +93,6 @@ public interface ICommand {
   String execute(HttpServletRequest request, HttpServletResponse response)
    throws HttpException;
 }
+
 
 

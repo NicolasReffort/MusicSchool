@@ -33,18 +33,7 @@ public class CreerAdherents implements ICommand {
    throws HttpException {
 
     init(request, response);
-
-    //instanciation des cookies
-    Cookie[] cookies = request.getCookies();
-
-    if (getCookie(request, "prenom") == null) {
-      response.addCookie(new Cookie("prenom", "vide"));
-    }
-    
-    if (getCookie(request, "nom") == null) {
-      response.addCookie(new Cookie("nom", "vide"));
-    }
-
+    runCookies(request, response);
 
     String nomCreation;
     String prenomCreation;
@@ -89,15 +78,19 @@ public class CreerAdherents implements ICommand {
         } else {
         // si toujours pas d'erreurs, on essaie de setter
           try {
+
             membres.add(personneACreer);
+
             // on stocke ces infos dans un cookie
-            Cookie cookieNom = getCookie(request, "nom");
+            String cookiePrenomUser = "prenomUser";
+            String cookieNomUser = "nomUser";
+            Cookie cookieNom = getCookie(request, cookieNomUser);
             if (cookieNom != null) {
               cookieNom.setValue(nomCreation);
               response.addCookie(cookieNom);
               request.setAttribute("nouveauNom", cookieNom.getValue());
             }
-            Cookie cookiePrenom = getCookie(request, "prenom");
+            Cookie cookiePrenom = getCookie(request, cookiePrenomUser);
             if (cookiePrenom != null) {
               cookiePrenom.setValue(prenomCreation);
               response.addCookie(cookiePrenom);

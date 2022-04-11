@@ -22,18 +22,12 @@ public class PageAccueilController implements ICommand {
   public String execute(final HttpServletRequest request,
   final HttpServletResponse response) throws HttpException {
 
-    //init(request, response);
-    // variables de session
-    // HttpSession session = request.getSession();
-    // String nomUser = "Francis Holmes";
-    // session.setAttribute("nomUser", "François");
-    // String messageAccueil = "Je vous salue   ";
+    init(request, response);
+    runCookies(request, response);
+    
 
-    // if (session.getAttribute("nomUser") != null) {
-    //   session.setAttribute("messageAccueil", messageAccueil + nomUser);
-    // }
 
-    return "accueil.jsp";
+    return "Accueil.jsp";
   }
 
 

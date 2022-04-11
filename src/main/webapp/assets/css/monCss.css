@@ -1,14 +1,18 @@
-*{
-  background-image: url('https: //images6.alphacoders.com/326/thumbbig-326020.webp');
-  background-size: cover;
+body {
+  background: rgb(85, 251, 63);
+  background: radial-gradient(circle, rgba(85, 251, 63, 1) 0%, rgba(252, 70, 107, 1) 100%);
+  background-attachment: fixed;
+
 }
 
-body {
-  margin: 0;
-  padding: 0;
-  /* background: #f7f7f7; */
-  background-image: url('assets/image/background.jpg');
-  background-size: cover;
+#motCompteur{
+  
+}
+
+a:hover {
+  color: #2d2895;
+  box-shadow: 5 5 5px #2d2895;
+  text-shadow: 5 5 5px #2d2895;
 }
 
 

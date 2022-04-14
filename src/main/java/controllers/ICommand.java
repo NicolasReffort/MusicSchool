@@ -68,7 +68,7 @@ public interface ICommand {
 
   }
 
-  default  Cookie getCookie(HttpServletRequest request, String name) {
+  default Cookie getCookie(HttpServletRequest request, String name) {
 
     if (request.getCookies() != null) {
       for (Cookie cookie : request.getCookies()) {
@@ -79,9 +79,6 @@ public interface ICommand {
     }
     return null;
   }
-
-
-
 
   /**
    *

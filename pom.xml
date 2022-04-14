@@ -95,6 +95,19 @@
    <version>1.2</version>
   </dependency>
 
+  	<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+	<dependency>
+		<groupId>mysql</groupId>
+		<artifactId>mysql-connector-java</artifactId>
+		<version>8.0.28</version>
+	</dependency>
+
+	<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
+	<dependency>
+		<groupId>org.hibernate</groupId>
+		<artifactId>hibernate-core</artifactId>
+  <version>5.4.13.Final</version>
+  </dependency>
 
  </dependencies>
 
@@ -122,7 +135,7 @@
     <plugin>
      <artifactId>maven-war-plugin</artifactId>
      <version>3.2.2</version>
-    </plugin>
+	</plugin>
 
     <plugin>
      <artifactId>maven-install-plugin</artifactId>
@@ -133,7 +146,7 @@
      <version>2.8.2</version>
     </plugin>
 
-		<plugin>
+	<plugin>
      <groupId>org.codehaus.cargo</groupId>
      <artifactId>cargo-maven2-plugin</artifactId>
      <version>1.7.11</version>
@@ -145,18 +158,18 @@
       <configuration>
        <type>runtime</type>
        <properties>
-        <cargo.tomcat.context.reloadable>true</cargo.tomcat.context.reloadable>
 
+        <cargo.tomcat.context.reloadable>true</cargo.tomcat.context.reloadable>
 				<cargo.remote.username>${catalina.admin.username}</cargo.remote.username>
 				<cargo.remote.password>${catalina.admin.password}</cargo.remote.password>
 				<cargo.tomcat.manager.url>${catalina.manager.url</cargo.tomcat.manager.url>
-
         <cargo.servlet.port>9080</cargo.servlet.port>
 
        </properties>
       </configuration>
      </configuration>
     </plugin>
+
 
 		<!-- CHECKSTYLE -->
 		<plugin>

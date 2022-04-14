@@ -4,7 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nonnull;
-import javax.validation.constraints.Min;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
 import java.util.Set;
@@ -22,17 +27,24 @@ import exceptions.MonException;
 
 /** Une personne.
  */
+@Entity
+@Table(name = "personne")
 public class Personne {
 
-  @Min(value = 1, message = "l'identifiant ne peut pas être inférieur à 1")
+  // annotations pour le mappage avec ORM
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  @Column
   private Integer identifiant;
 
   @Nonnull
+  @Column
   @Size (min = 2, max = 30,
    message = "Le nom doit faire entre 2 et 30 caractères")
   private String nom;
 
   @Nonnull
+  @Column
   @Size (min = 2, message = "Le prénom est trop court")
   private String prenom;
 
@@ -40,15 +52,17 @@ public class Personne {
     return identifiant;
   }
   public final void setIdentifiant(final Integer identifiantASetter) {
-    this.identifiant = identifiantASetter;
+      this.identifiant = identifiantASetter;
   }
 
   public final String getNom() {
     return nom;
   }
+
   public final void setNom(final String nomASetter) throws MonException {
     this.nom = nomASetter;
   }
+
   public final String getPrenom() {
     return prenom;
   }
@@ -61,10 +75,15 @@ public class Personne {
   public Personne() { };
 
   public Personne(final String nomASetter,
+   final String prenomASetter) {
+    this.nom = nomASetter;
+    this.prenom = prenomASetter;
+  }
+  public Personne(final String nomASetter,
    final String prenomASetter, final Integer identifiantASetter) {
     this.nom = nomASetter;
     this.prenom = prenomASetter;
-    this.identifiant = identifiantASetter;
+    setIdentifiant(identifiantASetter);
   }
 
   /** Beanvalide la personne.

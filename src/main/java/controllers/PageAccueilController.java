@@ -5,6 +5,11 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.http.HttpException;
 
+import dao.DaoPersonne;
+import models.Personne;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 public class PageAccueilController implements ICommand {
@@ -24,9 +29,8 @@ public class PageAccueilController implements ICommand {
 
     init(request, response);
     runCookies(request, response);
-    
 
-
+    List<Personne> personnes = new ArrayList<Personne>();
     return "Accueil.jsp";
   }
 

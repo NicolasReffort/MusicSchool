@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,7 +24,8 @@ public class CreerAdherents implements ICommand {
   private Logger logger =
   Logger.getLogger(CreerAdherents.class.getName());
 
-
+    private static EntityManagerFactory factory;
+  private static EntityManager em;
 
   /** cree un adhérent.
    * @param request une requête html
@@ -55,7 +59,6 @@ public class CreerAdherents implements ICommand {
       try {
         personneACreer.setNom(nomCreation);
         personneACreer.setPrenom(prenomCreation);
-        personneACreer.setIdentifiant(666);
       } catch (MonException mem) {
         erreurs.add(mem.getMessage());
       }
@@ -79,32 +82,41 @@ public class CreerAdherents implements ICommand {
         // si toujours pas d'erreurs, on essaie de setter
           try {
 
-            membres.add(personneACreer);
+           membres.add(personneACreer);
 
-            // on stocke ces infos dans un cookie
-            String cookiePrenomUser = "prenomUser";
-            String cookieNomUser = "nomUser";
-            Cookie cookieNom = getCookie(request, cookieNomUser);
-            if (cookieNom != null) {
-              cookieNom.setValue(nomCreation);
-              response.addCookie(cookieNom);
-              request.setAttribute("nouveauNom", cookieNom.getValue());
-            }
-            Cookie cookiePrenom = getCookie(request, cookiePrenomUser);
-            if (cookiePrenom != null) {
-              cookiePrenom.setValue(prenomCreation);
-              response.addCookie(cookiePrenom);
-              request.setAttribute("nouveauPrenom", cookiePrenom.getValue());
-            }
+           factory = Persistence.createEntityManagerFactory("maRessourceSql");
+           em = factory.createEntityManager();
+           em.getTransaction().begin();
+           em.persist(personneACreer);
+           em.getTransaction().commit();
 
+           // on stocke ces infos dans un cookie
+           String cookiePrenomUser = "prenomUser";
+           String cookieNomUser = "nomUser";
+           Cookie cookieNom = getCookie(request, cookieNomUser);
+           if (cookieNom != null) {
+               cookieNom.setValue(nomCreation);
+               response.addCookie(cookieNom);
+               request.setAttribute("nouveauNom", cookieNom.getValue());
+           }
+           Cookie cookiePrenom = getCookie(request, cookiePrenomUser);
+
+           if (cookiePrenom != null) {
+             cookiePrenom.setValue(prenomCreation);
+             response.addCookie(cookiePrenom);
+             request.setAttribute("nouveauPrenom", cookiePrenom.getValue());
+           }
 
             creation = "done";
           } catch (NumberFormatException nfe) {
             // si pb on renvoie la personne en erreur, avec un flag d'erreur
             logger.log(Level.INFO, nfe.getMessage());
             erreurDetectee = true;
+          } catch (IllegalStateException ise) {
+          } catch (Exception e) {
           }
-        }
+          }
+
       } else {
         /* si erreurs dès le bean validator,
         on refuse de lui donner le statut de "done" et

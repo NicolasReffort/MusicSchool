@@ -13,18 +13,11 @@ import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.transaction.Transaction;
-
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-
 import controllers.CreerAdherents;
 import controllers.ICommand;
 import controllers.ListerAdherents;
@@ -63,19 +56,7 @@ public class Servlet extends HttpServlet {
    @Override
    public final void init() throws ServletException {
 
-    try {
-      factory = Persistence.createEntityManagerFactory("maRessourceSql");
-      Personne michel = new Personne("Michel", "Robert");
-      em = factory.createEntityManager();
-      em.getTransaction().begin();
-      em.persist(michel);
-      em.getTransaction().commit();
 
-    } catch (IllegalStateException ise) {
-      log("pb création EntityManager" + ise.getMessage());
-    } catch (Exception e) {
-      log("l'appel de l'entité manager a échoué : " + e.getLocalizedMessage());
-    }
 
 
     MAPS.put(null, new PageAccueilController());

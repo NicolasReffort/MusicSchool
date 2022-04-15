@@ -1,12 +1,10 @@
 package controllers;
 
 import java.util.logging.Logger;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.apache.http.HttpException;
 
 public interface ICommand {
@@ -37,14 +35,13 @@ public interface ICommand {
       } catch (IllegalStateException iso) {
         logger.warning(iso.getCause()
             + iso.getMessage()
-            + "Pb de illegal state exception : ");
+            + "impossible de récupérer le compteur : ");
       } catch (Exception e) {
         logger.warning(e.getCause()
             + e.getMessage()
             + "impossible de récupérer le compteur : ");
       }
     }
-
   }
 
   default void runCookies(HttpServletRequest request,
@@ -65,7 +62,6 @@ public interface ICommand {
       cookie.setMaxAge(3600);
       response.addCookie(cookie);
     }
-
   }
 
   default Cookie getCookie(HttpServletRequest request, String name) {

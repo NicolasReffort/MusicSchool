@@ -24,7 +24,6 @@ public class SupprimerAdherents implements ICommand {
   final HttpServletResponse response)
   throws HttpException {
 
-    init(request, response);
     ArrayList<Personne> membres = new ArrayList<Personne>();
     List<String> erreurs = new ArrayList<String>();
     Boolean erreurDetectee = false;

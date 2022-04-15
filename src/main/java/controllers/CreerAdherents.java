@@ -6,8 +6,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,15 +15,13 @@ import org.apache.http.HttpException;
 import exceptions.MonException;
 import models.Personne;
 import models.forms.FormulaireCreation;
+import servlet.FrontController;
 
 
 public class CreerAdherents implements ICommand {
 
   private Logger logger =
   Logger.getLogger(CreerAdherents.class.getName());
-
-    private static EntityManagerFactory factory;
-  private static EntityManager em;
 
   /** cree un adhérent.
    * @param request une requête html
@@ -36,9 +32,6 @@ public class CreerAdherents implements ICommand {
   final HttpServletResponse response)
    throws HttpException {
 
-    init(request, response);
-    runCookies(request, response);
-
     String nomCreation;
     String prenomCreation;
     ArrayList<Personne> membres = new ArrayList<Personne>();
@@ -46,6 +39,7 @@ public class CreerAdherents implements ICommand {
     String creation = "";
     List<String> erreurs = new ArrayList<String>();
     Boolean erreurDetectee = false;
+
     Personne personneACreer = new Personne();
 
     //SI on a un paramètre issue de la création c'est que
@@ -82,10 +76,7 @@ public class CreerAdherents implements ICommand {
         // si toujours pas d'erreurs, on essaie de setter
           try {
 
-           membres.add(personneACreer);
-
-           factory = Persistence.createEntityManagerFactory("maRessourceSql");
-           em = factory.createEntityManager();
+           EntityManager em = FrontController.getEm();
            em.getTransaction().begin();
            em.persist(personneACreer);
            em.getTransaction().commit();

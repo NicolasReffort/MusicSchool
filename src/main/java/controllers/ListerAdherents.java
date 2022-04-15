@@ -1,13 +1,18 @@
 package controllers;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.apache.http.HttpException;
-
+import dao.DaoPersonne;
 import models.Personne;
 
+
 public class ListerAdherents implements ICommand {
+
+  private Logger logger =
+  java.util.logging.Logger.getLogger(DaoPersonne.class.getName());
 
   /**
    * liste les adhérents.
@@ -19,17 +24,16 @@ public class ListerAdherents implements ICommand {
   public String execute(final HttpServletRequest request,
    final HttpServletResponse response) throws HttpException {
 
-    init(request, response);
+    List<Personne> membres = new ArrayList<Personne>();
+    // on récupère nos membres
+    DaoPersonne dao = new DaoPersonne();
+    membres = dao.findAll();
 
-    ArrayList<Personne> membres = new ArrayList<Personne>();
+    // si on a des membres à l'intérieur de la collection on renvoit à la jsp
+    // if (!membres.equals(null)) {
+    //   request.setAttribute("membres", membres);
+    // }
 
-    // recupérer la collection :
-    Personne leonard = new Personne("De Vinci", "Léonard", 1);
-    Personne pablo = new Personne("Picasso", "Pablo", 2);
-    Personne david = new Personne("David", "Jacques-Louis", 3);
-    membres.add(leonard);
-    membres.add(pablo);
-    membres.add(david);
     request.setAttribute("membres", membres);
 
     return "lister.jsp";

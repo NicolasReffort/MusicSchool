@@ -48,26 +48,26 @@ public class Personne {
   @Size (min = 2, message = "Le prénom est trop court")
   private String prenom;
 
-  public final Integer getIdentifiant() {
+  public Integer getIdentifiant() {
     return identifiant;
   }
-  public final void setIdentifiant(final Integer identifiantASetter) {
+  public void setIdentifiant(final Integer identifiantASetter) {
       this.identifiant = identifiantASetter;
   }
 
-  public final String getNom() {
+  public  String getNom() {
     return nom;
   }
 
-  public final void setNom(final String nomASetter) throws MonException {
+  public  void setNom(final String nomASetter) throws MonException {
     this.nom = nomASetter;
   }
 
-  public final String getPrenom() {
+  public  String getPrenom() {
     return prenom;
   }
 
-  public final void setPrenom(final String prenomASetter) {
+  public  void setPrenom(final String prenomASetter) {
     this.prenom = prenomASetter;
   }
 

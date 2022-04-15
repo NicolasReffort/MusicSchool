@@ -27,8 +27,6 @@ public final class ModifierAdherents implements ICommand {
   public String execute(final HttpServletRequest request,
    final HttpServletResponse response) throws HttpException {
 
-    init(request, response);
-
     Integer idToModifier = 0;
     ArrayList<Personne> membres = new ArrayList<Personne>();
 

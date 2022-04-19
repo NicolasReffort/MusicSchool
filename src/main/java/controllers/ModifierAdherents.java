@@ -28,6 +28,7 @@ public final class ModifierAdherents implements ICommand {
   public String execute(final HttpServletRequest request,
    final HttpServletResponse response) throws HttpException {
 
+
     Integer idToModifier = 0;
     List<Personne> membres = new ArrayList<Personne>();
 
@@ -91,24 +92,20 @@ public final class ModifierAdherents implements ICommand {
       nomModifie = request.getParameter("nom");
       prenomModifie = request.getParameter("prenom");
       try {
+        // on relie l'id à la personne
         idToModifier =
-         Integer.parseInt(request.getParameter(savoirSiPersonneEstModifie));
+        Integer.parseInt(request.getParameter(savoirSiPersonneEstModifie));
+        membreModifie = new DaoPersonne().findById(idToModifier);
+        membreModifie.setNom(nomModifie);
+        membreModifie.setIdentifiant(idToModifier);
+        membreModifie.setPrenom(prenomModifie);
       } catch (NumberFormatException nfe) {
         logger.log(Level.INFO, "Id non parsable");
+      } catch (MonException monException) {
+        erreurs.add(monException.getMessage());
+        logger.log(Level.INFO, monException.getMessage());
       }
 
-      // on relie l'id à la personne
-      for (Personne membre : membres) {
-        if ((membre.getIdentifiant()).equals(idToModifier)) {
-          try {
-            membreModifie.setNom(nomModifie);
-            membreModifie.setIdentifiant(idToModifier);
-            membreModifie.setPrenom(prenomModifie);
-          } catch (MonException me) {
-            erreurs.add(me.getMessage());
-          }
-        }
-      }
       // on teste les valeurs reçues avec BeanValidator
       erreurs = membreModifie.areMyAttributesOk();
       // si pas d'erreurs au niveau du BeanValidator
@@ -126,7 +123,15 @@ public final class ModifierAdherents implements ICommand {
         } else {
         // si pas erreurs, on renvoie avec succès
           succesModification = true;
-          //et on sauvegarde la modification
+          //... et on sauvegarde la modification
+          try {
+            new DaoPersonne().save(membreModifie);
+          } catch (MonException me) {
+            logger.log(Level.INFO, "impossible de save le membre modifié"
+            + me.getMessage());
+            erreurs.add("Impossible de modifier ce membre pour l'heure."
+            + "Merci de réessayer plus tard");
+          }
         }
 
       } else {

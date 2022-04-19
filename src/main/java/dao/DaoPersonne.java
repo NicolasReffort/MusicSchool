@@ -83,46 +83,80 @@ public class DaoPersonne {
    *
    * @param personneToSave la personne à créer/mettre à jour
    * @throws MonException si plusieurs résultats
-   * @return La personne trouvée, null si pas de match.
+   * @return L'id de la personne mise à jour, null si échec.
    */
   public final Integer save(final Personne personneToSave)
   throws MonException {
 
-    Integer lastInsert = 0;
+    Integer lastInsert = null;
 
     // appel Entité Manager
     EntityManager em = FrontController.getEm();
-    Integer idPersonneToSave = personneToSave.getIdentifiant();
     EntityTransaction transaction = em.getTransaction();
 
     //est-ce une mise à jour ou une création ?
 
-    /* si id vaut null(de la JSP)
-    c'est qu'il n'existe pas encore*/
-    if (idPersonneToSave == 1) {
-      try {
-        transaction.begin();
-        em.persist(personneToSave);
-        transaction.commit();
-      } catch (Exception e) {
-        logger.warning("la création a planté : "
-        + e.getLocalizedMessage());
-        transaction.rollback();
-      }
-      //sinon c'est une mise à jour
-    } else {
-      try {
+     try {
         transaction.begin();
         em.merge(personneToSave);
         transaction.commit();
+        lastInsert = personneToSave.getIdentifiant();
       } catch (Exception e) {
-        logger.warning("la mise à jour a planté : "
-            + e.getLocalizedMessage());
+        logger.warning("le merge a planté : "
+        + e.getLocalizedMessage());
         transaction.rollback();
       }
 
-    }
+    /* si id vaut 2(de la JSP)
+    c'est qu'il n'existe pas encore*/
+    // if (idPersonneToSave == 2) {
+    //   try {
+    //     transaction.begin();
+    //     em.persist(personneToSave);
+    //     transaction.commit();
+    //   } catch (Exception e) {
+    //     logger.warning("la création a planté : "
+    //     + e.getLocalizedMessage());
+    //     transaction.rollback();
+    //   }
+    //   //sinon c'est une mise à jour
+    // } else {
+    //   try {
+    //     transaction.begin();
+    //     em.merge(personneToSave);
+    //     transaction.commit();
+    //   } catch (Exception e) {
+    //     logger.warning("la mise à jour a planté : "
+    //         + e.getLocalizedMessage());
+    //     transaction.rollback();
+    //   }
+    // }
 
     return lastInsert;
+  }
+
+  public final Integer delete(final Personne personneToDl) {
+
+    Integer lastDelete = null;
+
+    // appel Entité Manager
+    EntityManager em = FrontController.getEm();
+    EntityTransaction transaction = em.getTransaction();
+
+    // est-ce une mise à jour ou une création ?
+
+    try {
+      transaction.begin();
+      em.remove(personneToDl);
+      transaction.commit();
+      lastDelete = personneToDl.getIdentifiant();
+    } catch (Exception e) {
+      logger.warning("le delete a planté : "
+          + e.getLocalizedMessage());
+      transaction.rollback();
+    }
+
+    return lastDelete;
+
   }
 }

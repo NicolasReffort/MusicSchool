@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.http.HttpException;
 
+import dao.DaoPersonne;
 import exceptions.MonException;
 
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ public final class ModifierAdherents implements ICommand {
    final HttpServletResponse response) throws HttpException {
 
     Integer idToModifier = 0;
-    ArrayList<Personne> membres = new ArrayList<Personne>();
+    List<Personne> membres = new ArrayList<Personne>();
 
     String nomModifie;
     String prenomModifie;
@@ -48,14 +49,9 @@ public final class ModifierAdherents implements ICommand {
     //si la modification en Bdd a fonctionné
 
     if (Boolean.TRUE.equals(membres.isEmpty())) {
-
       // recupérer la collection :
-      Personne leonard = new Personne("De Vinci", "Léonard", 50);
-      Personne pablo = new Personne("Picasso", "Pablo", 60);
-      Personne david = new Personne("David", "Jacques-Louis", 77);
-      membres.add(leonard);
-      membres.add(pablo);
-      membres.add(david);
+      DaoPersonne dao = new DaoPersonne();
+      membres = dao.findAll();
     }
 
     final String savoirSiSelectSelectionne = "idFromSelect";
@@ -71,21 +67,21 @@ public final class ModifierAdherents implements ICommand {
 
     if (Boolean.TRUE.equals(unePersonneChoisieDansLeSelect)
      && Boolean.FALSE.equals(unePersonneModifiee)) {
-      //on récupère son id
+
+      //on récupère la personne via l'id
       try {
         idToModifier =
          Integer.parseInt(request.getParameter(savoirSiSelectSelectionne));
-      } catch (NumberFormatException nfe) {
-        logger.log(Level.INFO, "Id non parsable");
-      }
-
-      // on le relie l'id la personne,
-      // personne qu'on renvoit à la JSP pour modification
-      for (Personne membre : membres) {
-        if ((membre.getIdentifiant().equals(idToModifier))) {
-          request.setAttribute("membreToModifier", membre);
+         DaoPersonne dao = new DaoPersonne();
+         Personne membreToModifier = new Personne();
+         membreToModifier = dao.findById(idToModifier);
+         // personne qu'on renvoit à la JSP pour modification
+         request.setAttribute("membreToModifier", membreToModifier);
+        } catch (NumberFormatException nfe) {
+          logger.log(Level.INFO, "Id non parsable");
+        } catch (MonException me) {
+          erreurs.add(me.getMessage());
         }
-      }
     }
 
     if (unePersonneModifiee) {
@@ -104,22 +100,19 @@ public final class ModifierAdherents implements ICommand {
       // on relie l'id à la personne
       for (Personne membre : membres) {
         if ((membre.getIdentifiant()).equals(idToModifier)) {
-          // on créé une personne pour aller passer les tests BeansValidator
-        try {
-          membreModifie.setNom(nomModifie);
-          membreModifie.setIdentifiant(idToModifier);
-          membreModifie.setPrenom(prenomModifie);
-        } catch (MonException me) {
-          erreurs.add(me.getMessage());
-        }
+          try {
+            membreModifie.setNom(nomModifie);
+            membreModifie.setIdentifiant(idToModifier);
+            membreModifie.setPrenom(prenomModifie);
+          } catch (MonException me) {
+            erreurs.add(me.getMessage());
+          }
         }
       }
       // on teste les valeurs reçues avec BeanValidator
       erreurs = membreModifie.areMyAttributesOk();
-
       // si pas d'erreurs au niveau du BeanValidator
       if (erreurs.isEmpty()) {
-
         // on teste les valeurs reçues avec la classe forms adaptée
         FormulaireModification monFormulaireModification =
          new FormulaireModification();
@@ -133,18 +126,18 @@ public final class ModifierAdherents implements ICommand {
         } else {
         // si pas erreurs, on renvoie avec succès
           succesModification = true;
+          //et on sauvegarde la modification
         }
 
       } else {
+        /*si erreur détectée on renvoit le membre que
+        l'user va essayer de modifier*/
         erreurDetectee = true;
-        //on renvoit le membre que l'user va essayer de modifier
         for (Personne membre : membres) {
-
           if ((membre.getIdentifiant()).equals(idToModifier)) {
             request.setAttribute("membreToModifier", membre);
           }
         }
-
       }
     }
 

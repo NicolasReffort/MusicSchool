@@ -5,17 +5,16 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.persistence.EntityManager;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.http.HttpException;
 
+import dao.DaoPersonne;
 import exceptions.MonException;
 import models.Personne;
 import models.forms.FormulaireCreation;
-import servlet.FrontController;
 
 
 public class CreerAdherents implements ICommand {
@@ -34,7 +33,6 @@ public class CreerAdherents implements ICommand {
 
     String nomCreation;
     String prenomCreation;
-    ArrayList<Personne> membres = new ArrayList<Personne>();
     final String savoirSiCreationSouhaitee = "nom";
     String creation = "";
     List<String> erreurs = new ArrayList<String>();
@@ -49,10 +47,14 @@ public class CreerAdherents implements ICommand {
       creation = "asked";
       nomCreation = request.getParameter("nom");
       prenomCreation = request.getParameter("prenom");
-      //to do mettre en try catch les setters
+      //setting de la personne à créer
       try {
         personneACreer.setNom(nomCreation);
         personneACreer.setPrenom(prenomCreation);
+        //id permettant à la méhtode save de comprendre que c'est une création :
+        personneACreer.setIdentifiant(2);
+
+         //indique à la DAO qu'on veut le créer
       } catch (MonException mem) {
         erreurs.add(mem.getMessage());
       }
@@ -73,13 +75,10 @@ public class CreerAdherents implements ICommand {
           erreurs.add(retourForm);
           erreurDetectee = true;
         } else {
-        // si toujours pas d'erreurs, on essaie de setter
+          // si toujours pas d'erreurs, on essaie d'enregistrer en Bdd
           try {
-
-           EntityManager em = FrontController.getEm();
-           em.getTransaction().begin();
-           em.persist(personneACreer);
-           em.getTransaction().commit();
+            new DaoPersonne().save(personneACreer);
+            creation = "done";
 
            // on stocke ces infos dans un cookie
            String cookiePrenomUser = "prenomUser";
@@ -98,7 +97,6 @@ public class CreerAdherents implements ICommand {
              request.setAttribute("nouveauPrenom", cookiePrenom.getValue());
            }
 
-            creation = "done";
           } catch (NumberFormatException nfe) {
             // si pb on renvoie la personne en erreur, avec un flag d'erreur
             logger.log(Level.INFO, nfe.getMessage());

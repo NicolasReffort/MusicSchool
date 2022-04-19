@@ -9,14 +9,14 @@
 		 <welcome-file>accueil</welcome-file>
 	 </welcome-file-list>
 
-	<error-page>
+	<!-- <error-page>
 		<error-code>500</error-code>
 		<location>/WEB-INF/JSP/erreur.jsp</location>
 	</error-page>
 	<error-page>
 		<error-code>404</error-code>
 		<location>/WEB-INF/JSP/erreur.jsp</location>
-	</error-page>
+	</error-page> -->
 
 	<!-- Pour avoir une inclusion du JavaServerStandard Library d'office dans les pages .jps -->
 	<jsp-config>
@@ -25,7 +25,7 @@
 			<page-encoding>UTF-8</page-encoding>
 			<include-prelude>
 				/WEB-INF/JSP/taglibs.jsp
-			</include-prelude>		
+			</include-prelude>
 		</jsp-property-group>
-	</jsp-config>			
-</web-app>                                                                                                                                  
+	</jsp-config>
+</web-app>

@@ -30,11 +30,9 @@ public class ListerAdherents implements ICommand {
     membres = dao.findAll();
 
     // si on a des membres à l'intérieur de la collection on renvoit à la jsp
-    // if (!membres.equals(null)) {
-    //   request.setAttribute("membres", membres);
-    // }
-
-    request.setAttribute("membres", membres);
+    if (!membres.equals(null)) {
+      request.setAttribute("membres", membres);
+    }
 
     return "lister.jsp";
   }

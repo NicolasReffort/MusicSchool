@@ -132,6 +132,7 @@ public final class ModifierAdherents implements ICommand {
             erreurs.add("Impossible de modifier ce membre pour l'heure."
             + "Merci de réessayer plus tard");
           }
+
         }
 
       } else {

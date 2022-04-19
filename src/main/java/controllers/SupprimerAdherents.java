@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.http.HttpException;
 
+import dao.DaoPersonne;
 import models.Personne;
 
 public class SupprimerAdherents implements ICommand {
@@ -24,25 +25,15 @@ public class SupprimerAdherents implements ICommand {
   final HttpServletResponse response)
   throws HttpException {
 
-    ArrayList<Personne> membres = new ArrayList<Personne>();
+    List<Personne> membres = new ArrayList<Personne>();
     List<String> erreurs = new ArrayList<String>();
     Boolean erreurDetectee = false;
     Boolean unePersonneChoisieDansLeSelect = false;
-    /*si la requete contient le savoirSiSelectSelectionne, c'est que
-    l'utilisateur a sélectionné une personne dans le select */
+    /*si l'utilisateur a sélectionné une personne dans le select */
+
     String deleteStatus = "";
     Boolean okForDelete = false;
 
-
-    // recupérer la collection :
-    Personne leonard = new Personne("De Vinci", "Léonard", 8);
-    Personne pablo = new Personne("Picasso", "Pablo", 3);
-    Personne monet = new Personne("Monet", "Claude", 4);
-    Personne david = new Personne("David", "Jacques-Louis", 666);
-    membres.add(leonard);
-    membres.add(pablo);
-    membres.add(david);
-    membres.add(monet);
 
     // on traduit les infos de la requête en Boolean pour travailler
     if (request.getParameterMap().containsKey("idFromSelect")) {
@@ -54,24 +45,24 @@ public class SupprimerAdherents implements ICommand {
 
     try {
 
+      // recupérer la collection :
+      DaoPersonne dao = new DaoPersonne();
+      membres = dao.findAll();
+
       if (okForDelete) {
         Personne membreToDelete = new Personne();
         Integer idToDelete;
         String idConfirmeString =  request.getParameter("identifiant");
         logger.info("identifiant" + idConfirmeString);
-          // on récupère son ID
+        // on récupère son ID
            idToDelete = Integer.parseInt(idConfirmeString);
+           //on relie l'ID à la personne
+          membreToDelete = dao.findById(idToDelete);
           // on supprime le membre
-          for (Personne membre : membres) {
-            if (membre.getIdentifiant().equals(idToDelete)) {
-              membreToDelete = membre;
-            }
+          if (!dao.delete(membreToDelete).equals(null)) {
+            deleteStatus = "deleteConfirmed";
           }
-          membres.remove(membreToDelete);
-          deleteStatus = "deleteConfirmed";
-          request.setAttribute("deleteStatus", deleteStatus);
-
-        } else if (unePersonneChoisieDansLeSelect) {
+      } else if (unePersonneChoisieDansLeSelect) {
           Integer idFromSelect;
           String idFromSelectString = request.getParameter("idFromSelect");
           //on récupère son ID
@@ -83,28 +74,27 @@ public class SupprimerAdherents implements ICommand {
             }
           }
           deleteStatus = "waitingOk";
-          request.setAttribute("deleteStatus", deleteStatus);
       }
-
 
     } catch (NumberFormatException nfe) {
-      erreurDetectee = true;
-      request.setAttribute("erreurDetectee", erreurDetectee);
-      erreurs.add("La suppression est"
-      + "impossible,"
-      + "merci de recommencer plus tard."
-      + " Ca sera sûrement fonctionnel plus tard!"
-      + nfe.getMessage());
-      request.setAttribute("erreurs", erreurs);
-      } catch (Exception e) {
+        erreurDetectee = true;
+        request.setAttribute("erreurDetectee", erreurDetectee);
+        erreurs.add("La suppression est"
+        + "impossible,"
+        + "merci de recommencer plus tard."
+        + " Ca sera sûrement fonctionnel plus tard!"
+        + nfe.getMessage());
+        request.setAttribute("erreurs", erreurs);
+    } catch (Exception e) {
         logger.severe(e.getMessage()
         + e.toString() + " Oups impossible de supprimer. ");
-      }
+    }
 
-  // dans tous les cas :
-  request.setAttribute("membres", membres);
+    // dans tous les cas :
+    request.setAttribute("membres", membres);
+    request.setAttribute("deleteStatus", deleteStatus);
+    return "supprimer.jsp";
 
-  return "supprimer.jsp";
   }
 
 

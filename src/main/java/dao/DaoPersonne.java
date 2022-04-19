@@ -96,29 +96,45 @@ public class DaoPersonne {
 
     //est-ce une mise à jour ou une création ?
 
-     try {
-        transaction.begin();
-        em.merge(personneToSave);
-        transaction.commit();
-        lastInsert = personneToSave.getIdentifiant();
-      } catch (Exception e) {
-        logger.warning("le merge a planté : "
-        + e.getLocalizedMessage());
-        transaction.rollback();
-      }
-
-    /* si id vaut 2(de la JSP)
-    c'est qu'il n'existe pas encore*/
-    // if (idPersonneToSave == 2) {
-    //   try {
+    //  try {
     //     transaction.begin();
-    //     em.persist(personneToSave);
+    //     em.merge(personneToSave);
     //     transaction.commit();
+    //     lastInsert = personneToSave.getIdentifiant();
     //   } catch (Exception e) {
-    //     logger.warning("la création a planté : "
+    //     logger.warning("le merge a planté : "
     //     + e.getLocalizedMessage());
     //     transaction.rollback();
     //   }
+
+    /* si id vaut 2(de la JSP)
+    c'est qu'il n'existe pas encore*/
+
+    if (personneToSave.getIdentifiant() == 2) {
+
+      try {
+        transaction.begin();
+        em.merge(personneToSave);
+        transaction.commit();
+      } catch (Exception e) {
+        logger.warning("la mise à jour a planté : "
+            + e.getLocalizedMessage());
+        transaction.rollback();
+      }
+    } else {
+      try {
+        transaction.begin();
+        em.persist(personneToSave);
+        em.flush();
+        transaction.commit();
+      } catch (Exception e) {
+        logger.warning("la création a planté : "
+        + e.getLocalizedMessage());
+        transaction.rollback();
+      }
+    }
+
+    // if (personneToSave.getIdentifiant() == 2) {
     //   //sinon c'est une mise à jour
     // } else {
     //   try {
@@ -135,6 +151,11 @@ public class DaoPersonne {
     return lastInsert;
   }
 
+  /**
+   *
+   * @param personneToDl
+   * @return null si la transaction échoue, sinon l'id de l'entité removed
+   */
   public final Integer delete(final Personne personneToDl) {
 
     Integer lastDelete = null;
